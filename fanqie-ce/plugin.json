@@ -1,11 +1,11 @@
 {
   "metadata": {
-    "name": "Fanqie CE by Chanhnh with lov3",
+    "name": "Fanqie CE (CHỈ ĐỌC, KO TẢI)",
     "author": "Chanhnh",
-    "version": 241027,
+    "version": 1,
     "source": "https://gist.github.com/Chanhnh/41e8dc13c03bd0d3ac5d2a2cd0352f10",
-    "regexp": "(\\d+)[.](\\d+)[.](\\d+)[.](\\d+):9999/info(.*?)|localhost:9999/info(.*?)|api.api-fanqienovel.sunianyun.live/info(.*?)|list.fqapi.jilulu.cn/info(.*?)|fanqienovel.com/page/(\\d+)|fanqienovel.com/info(.*?)",
-    "description": " Fanqie CE (Communist Edition - Bản cộng đồng), luôn miễn phí",
+    "regexp": "api.api-fanqienovel.sunianyun.live/info(.*?)|list.fqapi.jilulu.cn/info(.*?)|fanqienovel.com/page/(\\d+)|fanqienovel.com/info(.*?)",
+    "description": "Fanqie CE v1 (Communist Edition - Bản cộng đồng)",
     "locale": "zh_CN",
     "language": "javascript",
     "type": "chinese_novel"
@@ -20,6 +20,6 @@
   },
   "config": {
     "thread_num": 1,
-    "delay": 5000
+    "delay": 10000
   }
 }
