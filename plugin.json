@@ -14,6 +14,17 @@
       "description": "Fanqie CE v1 (Communist Edition - Bản cộng đồng)",
       "type": "chinese_novel",
       "locale": "zh_CN"
+    },
+    {
+      "name": "69shu - repo Đđ (Restore)",
+      "author": "Chanhnh",
+      "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/main/69shu/Archive.zip",
+      "version": 1,
+      "source": "https://69shu.biz",
+      "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/main/69shu/icon.png",
+      "description": "Đọc truyện trên trang 69shu",
+      "type": "chinese_novel",
+      "locale": "zh_CN"
     }
   ]
 }
