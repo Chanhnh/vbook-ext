@@ -3,7 +3,8 @@ load('libs.js');
 function execute(url) {
     url = url.replace(/^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)/img, BASE_URL);
     var browser = Engine.newBrowser() // Khởi tạo browser
-    doc = browser.launch(url, 4000)
+    browser.launch(url, 4000)
+    doc = browser.html()
     browser.close()
     var htm = doc.select(".txtnav")
     htm.select(".contentadv").remove()
