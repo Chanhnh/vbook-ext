@@ -3,6 +3,7 @@ load('config.js');
 
 function execute(url) {
     url = url.replace(/^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)/img, BASE_URL);
+    url = url.replace("/c/","/b/")
     // Định nghĩa regex để lấy ID sách và 2 chữ số đầu tiên
     const regexFull = /\/(\d+)\.html/; // Lấy toàn bộ số
     const regexTwoDigits = /\/(\d{2})\d+\.html/; // Lấy 2 chữ số đầu tiên
