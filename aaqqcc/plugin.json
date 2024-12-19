@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "name": "辣文小说",
+    "author": "Chanhnh",
+    "version": 1,
+    "source": "https://www.aaqqcc.com/",
+    "regexp": "https://(www.)aaqqcc.com/book/\\d+/?$",
+    "description": "Đọc truyện trên trang aaqqcc",
+    "locale": "zh_CN",
+    "language": "javascript",
+    "type": "chinese_novel",
+    "tag": "nsfw"
+  },
+  "script": {
+    "home": "home.js",
+    "detail": "detail.js",
+    "toc": "toc.js",
+    "genre": "genre.js",
+    "search": "search.js",
+    "chap": "chap.js"
+  }
+}

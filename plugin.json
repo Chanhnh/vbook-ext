@@ -16,15 +16,38 @@
       "locale": "zh_CN"
     },
     {
+      "name": "Fanqie",
+      "author": "Chanhnh",
+      "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/fanqie/Archive.zip",
+      "version": 1,
+      "source": "https://fanqienovel.com/",
+      "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/fanqie/icon.png",
+      "description": "Đọc truyện trên trang Fanqie",
+      "type": "chinese_novel",
+      "locale": "zh_CN"
+    },
+    {
       "name": "69shu - repo Đđ (Extended)",
       "author": "Chanhnh",
       "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/69shu/Archive.zip",
       "version": 4,
-      "source": "https://69shu.biz",
+      "source": "https://69shuba.cx",
       "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/69shu/icon.png",
       "description": "Đọc truyện trên trang 69shu",
       "type": "chinese_novel",
       "locale": "zh_CN"
+    },
+    {
+      "name": "辣文小说",
+      "author": "Chanhnh",
+      "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/aaqqcc/Archive.zip",
+      "version": 1,
+      "source": "https://www.aaqqcc.com",
+      "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/aaqqcc/icon.png",
+      "description": "Đọc truyện trên trang aaqqcc",
+      "type": "chinese_novel",
+      "locale": "zh_CN",
+      "tag": "nsfw"
     }
   ]
 }
