@@ -3,10 +3,8 @@ load('config.js');
 function execute(url, page) {
     if (!page) page = '1';
     url = url.replace(/^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)/img, BASE_URL);
-    url = url.replace(/^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)/img, BASE_URL1);
     let currentUrl = BASE_URL + url + page;
-    let currentUrl1 = BASE_URL1 + url + page;
-    let response = fetch(currentUrl, currentUrl1);
+    let response = fetch(currentUrl);
     
     if (response.ok) {
         let doc = response.html();

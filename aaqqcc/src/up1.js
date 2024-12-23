@@ -15,7 +15,7 @@ function execute(url, page) {
                 link: BASE_URL + e.attr("href"),
                 cover: e.select("img").first().attr("src"),
                 description: e.select("span").first().text(),
-                host: BASE_URL || BASE_URL1
+                host: BASE_URL
             });
         });
 
