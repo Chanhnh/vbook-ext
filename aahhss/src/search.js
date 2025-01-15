@@ -1,8 +1,8 @@
 load('config.js');
 function execute(key, page) {
     const BASE_URL = "https://www.aakkrr.com"; // URL chính của trang tìm kiếm
-    // Gửi yêu cầu GET thay vì POST
-    let response = fetch(BASE_URL + "/search/" + encodeURIComponent(key));
+    // Gửi yêu cầu GET
+    let response = fetch(BASE_URL + "/book/" + encodeURIComponent(key));
     if (response.ok) {
         let doc = response.html();
         let books = [];
