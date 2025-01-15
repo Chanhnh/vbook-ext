@@ -5,13 +5,13 @@
   },
   "data": [
     {
-      "name": "Fanqie CE (CHỈ ĐỌC, KO TẢI)",
+      "name": "Fanqie CE (CHỈ ĐỌC, CÓ TẢI)",
       "author": "Chanhnh",
       "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/main/fanqie-ce/Archive.zip",
-      "version": 1,
+      "version": 2,
       "source": "https://gist.github.com/Chanhnh/41e8dc13c03bd0d3ac5d2a2cd0352f10",
       "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/main/fanqie-ce/icon.png",
-      "description": "Fanqie CE v1 (Communist Edition - Bản cộng đồng)",
+      "description": "Fanqie CE (Communist Edition - Bản cộng đồng)",
       "type": "chinese_novel",
       "locale": "zh_CN"
     }
