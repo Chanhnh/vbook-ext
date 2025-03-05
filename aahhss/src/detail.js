@@ -18,7 +18,14 @@ function execute(url) {
             author: author,
             description: novelTitle + ': <br>' + description,
             detail: "Tác giả: " + author + '<br>' + "Thể loại: " + novelCategory + '<br>' + "Tình trạng: " + status + '<br>' + "Thời gian cập nhật: " + updateTime,
-            host: BASE_URL || BASE_URL1
+            suggests: [
+                {
+                    title: "Cùng tác giả",
+                    input: doc.select('dl.authors dd a').attr('href'),
+                                script:"suggest.js"
+                }
+            ],
+            host: BASE_URL
         });
     }
     return null;
