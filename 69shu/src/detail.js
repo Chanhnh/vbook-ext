@@ -9,26 +9,38 @@ function execute(url) {
     url = url.replace(/^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)/img, BASE_URL);
     url = url.replace("/c/","/b/");
     url = url.replace("/txt/","/book/")
-    // Định nghĩa regex để lấy ID sách và bỏ 3 chữ số cuối
-    const regex_id = /\/(\d+)\.(htm|html)/; // Lấy toàn bộ số
-    const regex_id2 = /\/(\d+)(\d{3})\.(htm|html)/; // Bỏ 3 chữ số cuối
-    // Lấy book_id và book_id2 từ URL
-    let book_id = url.match(regex_id)[1];
-    let book_id2 = url.match(regex_id2)[1];
     let response = fetch(url);
     if (response.ok) {
         let doc = response.html('gbk');
-
+        let novelTitle = doc.select('meta[property="og:novel:book_name"]').attr("content") || "";
+        let cover = doc.select('meta[property="og:image"]').attr("content") || "";
+        let newChap = doc.select('meta[property="og:novel:latest_chapter_name"]').attr("content") || "";
+        let author = doc.select('meta[property="og:novel:author"]').attr("content") || "";
+        let novelCategory = doc.select('meta[property="og:novel:category"]').attr("content") || "";
+        let status = doc.select('meta[property="og:novel:status"]').attr("content") || "";
+        let updateTime = (doc.select('meta[property="og:novel:update_time"]').attr("content") || "").replace(/\d\d:\d\d:\d\d/g, "");
+        let tags = ((doc.select("script").html().match(/tags:\s*'([^']+)'/) || [])[1] || "Không có thẻ").replace(/\|/g, "; ").replace(/;\s*$/, "");
+        let genId = (doc.select("script").html().match(/sortId:\s*'(\d+)'/) || [])[1] || "0";
         return Response.success({
-            name: $.Q(doc, 'div.booknav2 > h1 > a').text(),
-            cover: `${BASE_URL}/bimages/${book_id2}/${book_id}/${book_id}s.jpg`,
-            author: $.Q(doc, 'div.booknav2 > p').text().replace("作者：", "").trim(),
-            description: $.Q(doc, 'div.content > p').html(),
-            detail: $.QA(doc, 'div.booknav2 p', {m: x => x.text(), j: '<br>'}),
+            name: novelTitle,
+            cover: cover,
+            author: author,
+            description: doc.select("div.navtxt p").first().html(),
+            detail: "Thẻ: " + tags + '<br>' + '<br>' +
+                    "Mới nhất: " + newChap + '<br>' +
+                    "Thời gian cập nhật: " + updateTime,
+            ongoing: status !== "全本",
+            genres: [
+                {
+                    title: novelCategory,
+                    input: "/ajax_novels/class/" + genId + "/{0}.htm",
+                    script:"gen.js"
+                }
+            ],
             suggests: [
                 {
                     title: "Cùng tác giả",
-                    input:"/modules/article/author.php?author="+gbkEncode($.Q(doc, 'div.booknav2 > p').text().replace("作者：", "")),
+                    input:"/modules/article/author.php?author=" + gbkEncode(author),
                     script:"suggest.js"
                 }
             ],

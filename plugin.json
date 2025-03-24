@@ -16,11 +16,11 @@
       "locale": "zh_CN"
     },
     {
-      "name": "69shu - repo Đđ (Extended)",
+      "name": "69shu",
       "author": "Chanhnh",
       "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/69shu/Archive.zip",
-      "version": 4,
-      "source": "https://69shuba.cx",
+      "version": 5,
+      "source": "https://69shuba.com",
       "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/69shu/icon.png",
       "description": "Đọc truyện trên trang 69shu",
       "type": "chinese_novel",
