@@ -26,7 +26,7 @@ function execute(url) {
             cover: cover,
             author: author,
             description: doc.select("div.navtxt p").first().html(),
-            detail: "Thẻ: " + tags + '<br>' + '<br>' +
+            detail: "Thẻ: " + tags + '<br>' +
                     "Mới nhất: " + newChap + '<br>' +
                     "Thời gian cập nhật: " + updateTime,
             ongoing: status !== "全本",

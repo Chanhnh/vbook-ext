@@ -1,67 +1,28 @@
+load('config.js');
 function execute() {
-    return Response.success([
-        {title: "言情小说", input: "/ajax_novels/class/3/{0}.htm", script: "gen.js"},
-        {title: "玄幻魔法", input: "/ajax_novels/class/1/{0}.htm", script: "gen.js"},
-        {title: "修真武侠", input: "/ajax_novels/class/2/{0}.htm", script: "gen.js"},
-        {title: "穿越时空", input: "/ajax_novels/class/11/{0}.htm", script: "gen.js"},
-        {title: "都市小说", input: "/ajax_novels/class/9/{0}.htm", script: "gen.js"},
-        {title: "历史军事", input: "/ajax_novels/class/4/{0}.htm", script: "gen.js"},
-        {title: "游戏竞技", input: "/ajax_novels/class/5/{0}.htm", script: "gen.js"},
-        {title: "科幻空间", input: "/ajax_novels/class/6/{0}.htm", script: "gen.js"},
-        {title: "悬疑惊悚", input: "/ajax_novels/class/7/{0}.htm", script: "gen.js"},
-        {title: "同人小说", input: "/ajax_novels/class/8/{0}.htm", script: "gen.js"},
-        {title: "官场职场", input: "/ajax_novels/class/10/{0}.htm", script: "gen.js"},
-        {title: "青春校园", input: "/ajax_novels/class/12/{0}.htm", script: "gen.js"},
-        {title: "穿越", input: "/tag/穿越/{0}/", script: "gen.js"},
-        {title: "轻松", input: "/tag/轻松/{0}/", script: "gen.js"},
-        {title: "系统流", input: "/tag/系统流/{0}/", script: "gen.js"},
-        {title: "重生", input: "/tag/重生/{0}/", script: "gen.js"},
-        {title: "女强", input: "/tag/女强/{0}/", script: "gen.js"},
-        {title: "甜宠", input: "/tag/甜宠/{0}/", script: "gen.js"},
-        {title: "1V1", input: "/tag/1V1/{0}/", script: "gen.js"},
-        {title: "爽文", input: "/tag/爽文/{0}/", script: "gen.js"},
-        {title: "无敌流", input: "/tag/无敌流/{0}/", script: "gen.js"},
-        {title: "热血", input: "/tag/热血/{0}/", script: "gen.js"},
-        {title: "豪门", input: "/tag/豪门/{0}/", script: "gen.js"},
-        {title: "腹黑", input: "/tag/腹黑/{0}/", script: "gen.js"},
-        {title: "扮猪吃虎", input: "/tag/扮猪吃虎/{0}/", script: "gen.js"},
-        {title: "种田", input: "/tag/种田/{0}/", script: "gen.js"},
-        {title: "宅斗", input: "/tag/宅斗/{0}/", script: "gen.js"},
-        {title: "日久生情", input: "/tag/日久生情/{0}/", script: "gen.js"},
-        {title: "HE", input: "/tag/HE/{0}/", script: "gen.js"},
-        {title: "逆袭", input: "/tag/逆袭/{0}/", script: "gen.js"},
-        {title: "经营", input: "/tag/经营/{0}/", script: "gen.js"},
-        {title: "杀伐果断", input: "/tag/杀伐果断/{0}/", script: "gen.js"},
-        {title: "快节奏", input: "/tag/快节奏/{0}/", script: "gen.js"},
-        {title: "日常文", input: "/tag/日常文/{0}/", script: "gen.js"},
-        {title: "架空", input: "/tag/架空/{0}/", script: "gen.js"},
-        {title: "欢喜冤家", input: "/tag/欢喜冤家/{0}/", script: "gen.js"},
-        {title: "权谋", input: "/tag/权谋/{0}/", script: "gen.js"},
-        {title: "总裁", input: "/tag/总裁/{0}/", script: "gen.js"},
-        {title: "打脸", input: "/tag/打脸/{0}/", script: "gen.js"},
-        {title: "强强", input: "/tag/强强/{0}/", script: "gen.js"},
-        {title: "家长里短", input: "/tag/家长里短/{0}/", script: "gen.js"},
-        {title: "萌宝", input: "/tag/萌宝/{0}/", script: "gen.js"},
-        {title: "校园", input: "/tag/校园/{0}/", script: "gen.js"},
-        {title: "无限流", input: "/tag/无限流/{0}/", script: "gen.js"},
-        {title: "智商在线", input: "/tag/智商在线/{0}/", script: "gen.js"},
-        {title: "冷静", input: "/tag/冷静/{0}/", script: "gen.js"},
-        {title: "空间", input: "/tag/空间/{0}/", script: "gen.js"},
-        {title: "宫斗", input: "/tag/宫斗/{0}/", script: "gen.js"},
-        {title: "异能", input: "/tag/异能/{0}/", script: "gen.js"},
-        {title: "诸天流", input: "/tag/诸天流/{0}/", script: "gen.js"},
-        {title: "快穿", input: "/tag/快穿/{0}/", script: "gen.js"},
-        {title: "先婚后爱", input: "/tag/先婚后爱/{0}/", script: "gen.js"},
-        {title: "脑洞大", input: "/tag/脑洞大/{0}/", script: "gen.js"},
-        {title: "帝王", input: "/tag/帝王/{0}/", script: "gen.js"},
-        {title: "金手指", input: "/tag/金手指/{0}/", script: "gen.js"},
-        {title: "穿书", input: "/tag/穿书/{0}/", script: "gen.js"},
-        {title: "大佬", input: "/tag/大佬/{0}/", script: "gen.js"},
-        {title: "文娱", input: "/tag/文娱/{0}/", script: "gen.js"},
-        {title: "娱乐圈", input: "/tag/娱乐圈/{0}/", script: "gen.js"},
-        {title: "赚钱", input: "/tag/赚钱/{0}/", script: "gen.js"},
-        {title: "强者归来", input: "/tag/强者归来/{0}/", script: "gen.js"},
-        {title: "婚恋", input: "/tag/婚恋/{0}/", script: "gen.js"},
-        {title: "明星", input: "/tag/明星/{0}/", script: "gen.js"}
-    ]);
+    let response = fetch(BASE_URL + "/tags");
+    if (response.ok) {
+        let doc = response.html("gbk");
+        const data = [
+            {title: "言情小说", input: "/ajax_novels/class/3/{0}.htm", script: "gen.js"},
+            {title: "玄幻魔法", input: "/ajax_novels/class/1/{0}.htm", script: "gen.js"},
+            {title: "修真武侠", input: "/ajax_novels/class/2/{0}.htm", script: "gen.js"},
+            {title: "穿越时空", input: "/ajax_novels/class/11/{0}.htm", script: "gen.js"},
+            {title: "都市小说", input: "/ajax_novels/class/9/{0}.htm", script: "gen.js"},
+            {title: "历史军事", input: "/ajax_novels/class/4/{0}.htm", script: "gen.js"},
+            {title: "游戏竞技", input: "/ajax_novels/class/5/{0}.htm", script: "gen.js"},
+            {title: "科幻空间", input: "/ajax_novels/class/6/{0}.htm", script: "gen.js"},
+            {title: "悬疑惊悚", input: "/ajax_novels/class/7/{0}.htm", script: "gen.js"},
+            {title: "同人小说", input: "/ajax_novels/class/8/{0}.htm", script: "gen.js"},
+            {title: "官场职场", input: "/ajax_novels/class/10/{0}.htm", script: "gen.js"},
+            {title: "青春校园", input: "/ajax_novels/class/12/{0}.htm", script: "gen.js"},
+        ];
+        doc.select('.tag a').forEach(e => data.push({
+            title: e.text(),
+            input: e.attr('href') + "{0}/",
+            script: 'gen.js'
+        }));
+        return Response.success(data);
+    }
+    return null;
 }

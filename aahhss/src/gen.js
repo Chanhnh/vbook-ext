@@ -1,7 +1,7 @@
 load('config.js');
 
 function execute(url, page) {
-    if (!page) page = '1';
+    if (!page) page = '0';
     url = url.replace(/^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)/img, BASE_URL);
     let currentUrl = BASE_URL + url + page;
     let response = fetch(currentUrl);
