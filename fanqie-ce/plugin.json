@@ -1,9 +1,9 @@
 {
   "metadata": {
-    "name": "Fanqie CE (CHỈ ĐỌC, CÓ TẢI)",
+    "name": "Fanqie CE (KO TẢI) Cenguigui",
     "author": "Chanhnh",
-    "version": 2,
-    "source": "https://gist.github.com/Chanhnh/41e8dc13c03bd0d3ac5d2a2cd0352f10",
+    "version": 3,
+    "source": "https://api.cenguigui.cn/api/tomato.html",
     "regexp": "api.api-fanqienovel.sunianyun.live/info(.*?)|list.fqapi.jilulu.cn/info(.*?)|fanqienovel.com/page/(\\d+)|fanqienovel.com/info(.*?)",
     "description": "Fanqie CE (Communist Edition - Bản cộng đồng)",
     "locale": "zh_CN",

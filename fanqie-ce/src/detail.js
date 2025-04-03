@@ -16,7 +16,7 @@ console.log(JSON.stringify(e))
                 genres.push({
                     title: e.Name,
                     input: "https://novel.snssdk.com/api/novel/channel/homepage/new_category/book_list/v1/?parent_enterfrom=novel_channel_category.tab.&aid=1967&offset={{page}}&limit=100&category_id="+e.ObjectId+"&gender=1",
-                    script: "gen3.js"
+                    script: "gen2.js"
                 })
             });
             let last_publish_time = book_info.last_publish_time
@@ -33,7 +33,12 @@ console.log(JSON.stringify(e))
                 author: book_info.author,
                 description: book_info.abstract.replace(/\n/g, "<br>"),
                 genres: genres,
-                detail: `作者: ${book_info.author}<br>评分: ${score}分<br>章节数: ${serial_count}<br>字数: ${word_number}<br>查看次数: ${read_count}<br>更新: ${last_publish_time_string}<br>最后更新: ${last_chapter_title}`,
+                detail: `评分: ${score}分<br>
+                        章节数: ${serial_count}<br>
+                        字数: ${word_number}<br>
+                        查看次数: ${read_count}<br>
+                        更新: ${last_publish_time_string}<br>
+                        最后更新: ${last_chapter_title}`,
                 ongoing: ongoing
             });
 
