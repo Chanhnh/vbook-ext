@@ -8,10 +8,10 @@
       "name": "Fanqie CE (CHỈ ĐỌC, KO TẢI)",
       "author": "Chanhnh",
       "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/main/fanqie-ce/Archive.zip",
-      "version": 3,
+      "version": 4,
       "source": "https://bit.ly/fq-ce",
       "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/main/fanqie-ce/icon.png",
-      "description": "Fanqie CE (Communist Edition - Bản cộng đồng)",
+      "description": "Fanqie CE",
       "type": "chinese_novel",
       "locale": "zh_CN"
     }
