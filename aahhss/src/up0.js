@@ -5,7 +5,7 @@ function execute(url) {
     if (response.ok) {
         let doc = response.html();
         const data = [];
-        let bookLikeSection = doc.select(".book-like").get(1);
+        let bookLikeSection = doc.select(".book-like").get(0);
         if (bookLikeSection) {
             bookLikeSection.select("a").forEach(e => {
                 data.push({

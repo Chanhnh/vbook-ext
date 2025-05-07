@@ -18,9 +18,9 @@ function execute(url) {
             tags = tags.join("; ");
         let genres = [];
             doc.select('dl.categories dd a').forEach(e => genres.push({
-                    title: e.text(),
-                    input: e.attr('href') + "/",
-                    script: "gen.js"
+                title: e.text(),
+                input: e.attr('href') + "/",
+                script: "gen.js"
             }));
         return Response.success({
             name: novelTitle,
@@ -33,6 +33,7 @@ function execute(url) {
                     "Mới nhất: " + newChap + '<br>' +
                     "Thời gian cập nhật: " + updateTime,
             ongoing: status !== "已完结",
+            nsfw: true,
             genres: genres,
             suggests: [
                 {

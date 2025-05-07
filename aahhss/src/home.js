@@ -1,6 +1,7 @@
 function execute() {
     return Response.success([
-        {title: "猜你喜欢", input: "/", script: "up.js"},
+        { title: "猜你喜欢", input: "/", script: "up.js" },
+        { title: "传世神作", input: "/", script: "up0.js" },
         { title: "最新小说", input: "/top/new/", script: "up1.js" },
         { title: "人气排行", input: "/top/hot/", script: "up1.js" },
         { title: "收藏排行", input: "/top/collect/", script: "up1.js" },
