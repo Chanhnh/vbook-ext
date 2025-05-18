@@ -5,13 +5,13 @@
   },
   "data": [
     {
-      "name": "Fanqie CE (CHỈ ĐỌC, KO TẢI)",
+      "name": "Tomato CE (CHỈ ĐỌC, KO TẢI)",
       "author": "Chanhnh",
-      "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/main/fanqie-ce/Archive.zip",
-      "version": 4,
-      "source": "https://bit.ly/fq-ce",
-      "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/main/fanqie-ce/icon.png",
-      "description": "Fanqie CE",
+      "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/main/tomato-ce/Archive.zip",
+      "version": 5,
+      "source": "https://bit.ly/tomato-ce",
+      "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/main/tomato-ce/icon.png",
+      "description": "Tomato CE",
       "type": "chinese_novel",
       "locale": "zh_CN"
     }

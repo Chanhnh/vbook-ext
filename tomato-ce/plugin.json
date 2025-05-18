@@ -1,11 +1,11 @@
 {
   "metadata": {
-    "name": "Fanqie CE (CHỈ ĐỌC, KO TẢI)",
+    "name": "Tomato CE (CHỈ ĐỌC, KO TẢI)",
     "author": "Chanhnh",
-    "version": 4,
-    "source": "https://bit.ly/fq-ce",
+    "version": 5,
+    "source": "https://bit.ly/tomato-ce",
     "regexp": "api.api-fanqienovel.sunianyun.live/info(.*?)|list.fqapi.jilulu.cn/info(.*?)|fanqienovel.com/page/(\\d+)|fanqienovel.com/info(.*?)",
-    "description": "Fanqie CE",
+    "description": "Tomato CE",
     "locale": "zh_CN",
     "language": "javascript",
     "type": "chinese_novel"
