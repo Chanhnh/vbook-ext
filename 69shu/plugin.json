@@ -2,7 +2,7 @@
   "metadata": {
     "name": "69shu",
     "author": "Chanhnh",
-    "version": 5,
+    "version": 6,
     "source": "https://www.69shuba.com",
     "regexp": "(?:www\\.)?69(shu|shuba|xinshu)\\.(.*?)/(book|b)/.*?\\.(htm|html)",
     "description": "Đọc truyện trên trang 69shu",

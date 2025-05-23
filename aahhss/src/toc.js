@@ -11,7 +11,7 @@ function execute(url) {
             chapters.push({
                 name: e.text(),
                 url: BASE_URL + e.attr("href"),
-                host: BASE_URL || BASE_URL1
+                host: BASE_URL
             })
         });
         return Response.success(chapters);
