@@ -25,7 +25,7 @@ function execute(url) {
             genres.push({
                 title: e.text(),
                 input: e.attr("href"),
-                script: "gen.js"
+                script: "up.js"
             });
         });
         let description = doc.select("div.intro").text().trim();
@@ -46,7 +46,7 @@ function execute(url) {
                 {
                     title: "作者: " + author,
                     input: doc.select("p").select("a").first().attr('href'),
-                    script: "gen.js"
+                    script: "up.js"
                 },
             ],
             host: BASE_URL

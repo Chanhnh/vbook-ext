@@ -2,7 +2,7 @@
     "metadata": {
         "name": "alicesw",
         "author": "Chanhnh",
-        "version": 1,
+        "version": 2,
         "source": "https://www.alicesw.com",
         "regexp": "(?:www\\.)alicesw\\.(.*?)/novel/.*?\\.html",
         "description": "Đọc truyện trên trang alicesw",
