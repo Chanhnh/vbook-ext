@@ -45,7 +45,7 @@ function execute(url) {
             suggests: [
                 {
                     title: "作者: " + author,
-                    input: doc.select("p").select("a").first().attr('href'),
+                    input: doc.select("p").select("a").first().attr('href') + "&sort=create_time_DESC",
                     script: "up.js"
                 },
             ],

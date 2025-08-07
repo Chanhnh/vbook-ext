@@ -1,12 +1,9 @@
-load('config.js');
-
 function execute(url) {
-    let response = fetch(url);
-    if (response.ok) {
-        let doc = response.html();
-        let contentElement = doc.select(".read-content.j_readContent.user_ad_content");
-        let content = contentElement.html().trim();
-        return Response.success(content);
-    }
-    return null;
+    var browser = Engine.newBrowser();
+    browser.launchAsync(url);
+    sleep(2000);
+    doc = browser.html();
+    browser.close();
+    var content = doc.select(".content_txt").html();
+    return Response.success(content);
 }
