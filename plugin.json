@@ -49,6 +49,18 @@
       "type": "chinese_novel",
       "locale": "zh_CN",
       "tag": "nsfw"
+    },
+    {
+      "name": "夜读阁",
+      "author": "Chanhnh",
+      "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/yeduge/Archive.zip",
+      "version": 1,
+      "source": "https://www.yeduge.com",
+      "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/yeduge/icon.png",
+      "description": "Đọc truyện trên trang yeduge",
+      "type": "chinese_novel",
+      "locale": "zh_CN",
+      "tag": "nsfw"
     }
   ]
 }

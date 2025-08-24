@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "name": "夜读阁",
+    "author": "Chanhnh",
+    "version": 1,
+    "source": "https://www.yeduge.com/",
+    "regexp": "https://(www.)yeduge.com/(freebook|book)/\\d+/?$",
+    "description": "Đọc truyện trên trang yeduge",
+    "locale": "zh_CN",
+    "language": "javascript",
+    "type": "chinese_novel",
+    "tag": "nsfw"
+  },
+  "script": {
+    "home": "home.js",
+    "detail": "detail.js",
+    "toc": "toc.js",
+    "genre": "genre.js",
+    "search": "search.js",
+    "chap": "chap.js"
+  }
+}
