@@ -4,6 +4,6 @@ function execute(url) {
     sleep(5000);
     doc = browser.html();
     browser.close();
-    var content = doc.select(".content_txt").html();
+    var content = doc.select(".read-content").html();
     return Response.success(content);
 }

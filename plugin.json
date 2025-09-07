@@ -5,13 +5,13 @@
   },
   "data": [
     {
-      "name": "Tomato CE (CHỈ ĐỌC, KO TẢI)",
+      "name": "FQWeb Universal (vBook beta)",
       "author": "Chanhnh",
-      "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/main/tomato-ce/Archive.zip",
+      "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/fqweb/Archive.zip",
       "version": 1,
-      "source": "https://bit.ly/tomato-ce",
-      "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/main/tomato-ce/icon.png",
-      "description": "Tomato CE",
+      "source": "https://fanqienovel.com",
+      "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/fqweb/icon.png",
+      "description": "Fanqie Web Universal. Chỉ dùng được trên vBook beta",
       "type": "chinese_novel",
       "locale": "zh_CN"
     },
@@ -42,7 +42,7 @@
       "name": "alicesw",
       "author": "Chanhnh",
       "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/alicesw/Archive.zip",
-      "version": 3,
+      "version": 4,
       "source": "https://www.alicesw.com",
       "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/alicesw/icon.png",
       "description": "Đọc truyện trên trang alicesw",
