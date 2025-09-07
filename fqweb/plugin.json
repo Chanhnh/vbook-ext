@@ -1,0 +1,35 @@
+{
+  "metadata": {
+    "name": "FQWeb Universal (vBook beta)",
+    "author": "Chanhnh",
+    "version": 1,
+    "source": "https://fanqienovel.com",
+    "regexp": "fanqienovel.com/page/(\\d+)|fanqienovel.com/info(.*?)",
+    "description": "Fanqie Web Universal. Chỉ dùng được trên vBook beta",
+    "locale": "zh_CN",
+    "language": "javascript",
+    "type": "chinese_novel"
+  },
+  "script": {
+    "home": "home.js",
+    "detail": "detail.js",
+    "genre": "genre.js",
+    "toc": "toc.js",
+    "search": "search.js",
+    "chap": "chap.js"
+  },
+  "config": {
+    "api_url": {
+      "title": "URL API Fanqie",
+      "mode": "input",
+      "format": "text",
+      "default": "http://localhost:9999/content?item_id="
+    },
+    "content_path": {
+      "title": "Vị trí content trong json trả về",
+      "mode": "input",
+      "format": "text",
+      "default": "data.content"
+    }
+  }
+}

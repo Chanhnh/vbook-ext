@@ -14,6 +14,17 @@
       "description": "Tomato CE",
       "type": "chinese_novel",
       "locale": "zh_CN"
+    },
+    {
+      "name": "FQWeb Universal (vBook beta)",
+      "author": "Chanhnh",
+      "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/main/fqweb/Archive.zip",
+      "version": 1,
+      "source": "https://fanqienovel.com",
+      "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/main/fqweb/icon.png",
+      "description": "Fanqie Web Universal. Chỉ dùng được trên vBook beta",
+      "type": "chinese_novel",
+      "locale": "zh_CN"
     }
   ]
 }
