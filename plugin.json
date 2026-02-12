@@ -42,7 +42,7 @@
       "name": "alicesw",
       "author": "Chanhnh",
       "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/alicesw/Archive.zip",
-      "version": 4,
+      "version": 5,
       "source": "https://www.alicesw.com",
       "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/alicesw/icon.png",
       "description": "Đọc truyện trên trang alicesw",
@@ -58,6 +58,18 @@
       "source": "https://www.yeduge.com",
       "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/yeduge/icon.png",
       "description": "Đọc truyện trên trang yeduge",
+      "type": "chinese_novel",
+      "locale": "zh_CN",
+      "tag": "nsfw"
+    },
+    {
+      "name": "18mh",
+      "author": "Chanhnh",
+      "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/18mh/Archive.zip",
+      "version": 1,
+      "source": "https://18mh.net",
+      "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/18mh/icon.png",
+      "description": "Đọc truyện trên trang 18mh",
       "type": "chinese_novel",
       "locale": "zh_CN",
       "tag": "nsfw"
