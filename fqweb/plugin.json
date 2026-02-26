@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "name": "FQWeb Universal (vBook beta)",
+    "name": "FQWeb Universal",
     "author": "Chanhnh",
-    "version": 1,
+    "version": 2,
     "source": "https://fanqienovel.com",
     "regexp": "fanqienovel.com/page/(\\d+)|fanqienovel.com/info(.*?)",
     "description": "Fanqie Web Universal. Chỉ dùng được trên vBook beta",
