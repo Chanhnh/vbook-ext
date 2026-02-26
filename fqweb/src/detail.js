@@ -4,55 +4,65 @@ function execute(url) {
     let book_id = url.match(regex)[1]
 
     // let book_id = url.split("book_id=")[1]
-    let response = fetch("https://api5-normal-sinfonlineb.fqnovel.com/reading/bookapi/multi-detail/v/?aid=2329&iid=1&version_code=999&book_id=" + book_id)
+    let response = fetch("https://fanqienovel.com/page/" + book_id + "?force_mobile=1");
     if (response.ok) {
-            let json = response.json();
-            let book_info = json.data[0];
-            let a_gen=JSON.parse(book_info.category_v2);
+        let html = response.text();
+        const stateRegex = /window\.__INITIAL_STATE__\s*=\s*(\{[\s\S]*?\});/;
+        let match = html.match(stateRegex);
+        let state = JSON.parse(match[1]);
+        let book_info = state.page;
 
-            let genres = [];
-            a_gen.forEach(e => {
-console.log(JSON.stringify(e))
-                genres.push({
-                    title: e.Name,
-                    input: "https://novel.snssdk.com/api/novel/channel/homepage/new_category/book_list/v1/?parent_enterfrom=novel_channel_category.tab.&aid=1967&offset={{page}}&limit=100&category_id="+e.ObjectId+"&gender=1",
-                    script: "gen2.js"
-                })
-            });
-            let last_publish_time = book_info.last_publish_time
-            let last_publish_time_string = formatChineseDate(last_publish_time)
-            let serial_count = book_info.serial_count
-            let last_chapter_title = book_info.last_chapter_title
-            let read_count = book_info.read_count
-            let word_number = book_info.word_number
-            let score = book_info.score
-            let ongoing = (book_info.creation_status == '1') ? true : false
-            let authorID = book_info.author_id
-            return Response.success({
-                name: book_info.book_name,
-                cover: replaceCover(book_info.thumb_url),
-                author: book_info.author,
-                description: book_info.abstract.replace(/\n/g, "<br>"),
-                genres: genres,
-                detail: `评分: ${score}分<br>
+        let a_gen = JSON.parse(book_info.categoryV2);
+        let genres = [];
+        a_gen.forEach(e => {
+            console.log(JSON.stringify(e))
+            genres.push({
+                title: e.Name,
+                input: "https://fanqienovel.com/api/author/library/book_list/v0/?category_id=" + e.ObjectId + "&book_type=-1&page_count=18&page_index={{page}}",
+                script: "gen.js"
+            })
+        });
+        let last_publish_time = book_info.lastPublishTime
+        let last_publish_time_string = formatChineseDate(last_publish_time)
+        let serial_count = book_info.chapterTotal
+        let last_chapter_title = book_info.lastChapterTitle
+        let read_count = book_info.readCount
+        let word_number = book_info.wordNumber
+        let score = "0";
+        try {
+            let scoreRes = fetch("https://api5-normal-sinfonlinec.fqnovel.com/reading/user/share/info/v/?group_id=" + book_id + "&aid=1967&version_code=513");
+            if (scoreRes.ok) {
+                let scoreJson = scoreRes.json();
+                score = scoreJson.data.book_info.score;
+            }
+        } catch (e) {}
+        let ongoing = (book_info.creationStatus == '1') ? true : false
+        let authorID = book_info.authorId
+        return Response.success({
+            name: book_info.bookName,
+            cover: replaceCover(book_info.thumbUrl.replace(/\\u002F/g, "/")),
+            author: book_info.author,
+            description: book_info.abstract.replace(/\n/g, "<br>"),
+            genres: genres,
+            detail: `评分: ${score}分<br>
                         章节数: ${serial_count}<br>
                         字数: ${word_number}<br>
                         查看次数: ${read_count}<br>
                         更新: ${last_publish_time_string}<br>
                         最后更新: ${last_chapter_title}`,
-                suggests: [
-                    {
-                        title: "Cùng tác giả",
-                        input: `https://api5-normal-sinfonlinec.fqnovel.com/reading/user/basic_info/get/v?user_id=${authorID}&aid=1967&version_code=65532`,
-                        script: "suggest.js"
-                    }
-                ],
-                comment: {
-                    input: `https://api5-normal-sinfonlinec.fqnovel.com/reading/ugc/novel_comment/book/v/?&book_id=${book_id}&aid=1967&offset={{page}}`,
-                    script: "comment.js"
-                },
-                ongoing: ongoing
-            });
+            suggests: [
+                {
+                    title: book_info.author,
+                    input: `https://api5-normal-sinfonlinec.fqnovel.com/reading/user/basic_info/get/v?user_id=${authorID}&aid=1967&version_code=65532`,
+                    script: "suggest.js"
+                }
+            ],
+            comment: {
+                input: `https://api5-normal-sinfonlinec.fqnovel.com/reading/ugc/novel_comment/book/v/?&book_id=${book_id}&aid=1967&offset={{page}}`,
+                script: "comment.js"
+            },
+            ongoing: ongoing
+        });
 
     }
     return null;
