@@ -9,7 +9,7 @@ function execute(url) {
         let html = response.text();
         const stateRegex = /window\.__INITIAL_STATE__\s*=\s*(\{[\s\S]*?\});/;
         let match = html.match(stateRegex);
-        let state = JSON.parse(match[1]);
+        let state = JSON.parse(match[1].replace(/:\s*undefined/g, ':null'));
         let book_info = state.page;
 
         let a_gen = JSON.parse(book_info.categoryV2);
