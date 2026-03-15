@@ -32,7 +32,7 @@ function execute(url) {
         return Response.success(content);
     }
 
-    return Response.error("Lỗi API\nVui lòng cấu hình lại");
+    return Response.error("Lỗi API\nCần tham khảo ý kiến các chiên da để sử dụng\nCấu hình lại các thông tin API trong phần <Cài đặt> ext trước khi sử dụng");
 }
 
 // Giải mã \u003c -> <, \u003e -> >, ...

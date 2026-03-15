@@ -27,18 +27,6 @@
       "locale": "zh_CN"
     },
     {
-      "name": "辣文小说",
-      "author": "Chanhnh",
-      "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/aahhss/Archive.zip",
-      "version": 5,
-      "source": "https://www.aahhss.com",
-      "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/aahhss/icon.png",
-      "description": "Đọc truyện trên trang aahhss",
-      "type": "chinese_novel",
-      "locale": "zh_CN",
-      "tag": "nsfw"
-    },
-    {
       "name": "alicesw",
       "author": "Chanhnh",
       "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/alicesw/Archive.zip",
@@ -70,6 +58,18 @@
       "source": "https://18mh.net",
       "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/18mh/icon.png",
       "description": "Đọc truyện trên trang 18mh",
+      "type": "chinese_novel",
+      "locale": "zh_CN",
+      "tag": "nsfw"
+    },
+    {
+      "name": "UAA",
+      "author": "Chanhnh",
+      "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/uaa/Archive.zip",
+      "version": 1,
+      "source": "https://www.uaa.com",
+      "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/uaa/icon.png",
+      "description": "Đọc truyện trên trang uaa",
       "type": "chinese_novel",
       "locale": "zh_CN",
       "tag": "nsfw"

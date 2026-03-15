@@ -1,11 +1,11 @@
 {
   "metadata": {
-    "name": "辣文小说",
+    "name": "UAA",
     "author": "Chanhnh",
-    "version": 5,
-    "source": "https://www.aahhss.com/",
-    "regexp": "https://(www.)aa(hhss|qqcc).com/book/\\d+/?$",
-    "description": "Đọc truyện trên trang aahhss",
+    "version": 1,
+    "source": "https://www.uaa.com/",
+    "regexp": "https://(www.)uaa.com/novel/intro?id=\\d+/?$",
+    "description": "Đọc truyện trên trang UAA",
     "locale": "zh_CN",
     "language": "javascript",
     "type": "chinese_novel",

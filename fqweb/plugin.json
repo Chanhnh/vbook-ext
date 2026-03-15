@@ -5,7 +5,7 @@
     "version": 2,
     "source": "https://fanqienovel.com",
     "regexp": "fanqienovel.com/page/(\\d+)|fanqienovel.com/info(.*?)",
-    "description": "Fanqie Web Universal. Chỉ dùng được trên vBook beta",
+    "description": "Fanqie Web Universal. Chỉ dùng được trên vBook beta\nDành cho mục đích phát triển\nCần tham khảo ý kiến các chiên da để sử dụng\nCấu hình các thông tin API trong phần <Cài đặt> ở dưới trước khi sử dụng",
     "locale": "zh_CN",
     "language": "javascript",
     "type": "chinese_novel"
