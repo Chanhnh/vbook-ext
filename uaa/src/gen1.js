@@ -3,7 +3,12 @@ load('config.js');
 function execute(url, page) {
     if (!page) page = '1';
     url = url.replace(/^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)/img, BASE_URL);
-    let response = fetch(BASE_URL + url + "&page=" + page);
+    let response = fetch(BASE_URL + url + "&page=" + page, {
+        headers: {
+            "user-agent": UserAgent.system()
+        },
+    });
+
     if (response.ok) {
         let doc = response.html();
         const data = [];

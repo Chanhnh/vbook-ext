@@ -2,7 +2,7 @@
   "metadata": {
     "name": "UAA",
     "author": "Chanhnh",
-    "version": 1,
+    "version": 2,
     "source": "https://www.uaa.com/",
     "regexp": "https://(www.)uaa.com/novel/intro?id=\\d+/?$",
     "description": "Đọc truyện trên trang UAA",

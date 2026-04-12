@@ -3,7 +3,12 @@ load('config.js');
 function execute(url, page) {
     if (!page) page = 1
     url = url.replace(/^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)/img, BASE_URL);
-    let response = fetch(BASE_URL + url + "&page=" + page + "&rows=10");
+    let response = fetch(BASE_URL + url + "&page=" + page + "&rows=10", {
+        headers: {
+            "user-agent": UserAgent.system()
+        },
+    });
+    
     if (response.ok) {
         let json = response.json();
         let cmtList = json.data;
@@ -13,6 +18,7 @@ function execute(url, page) {
             let score = "⭐".repeat(scoreCount) + '☆'.repeat(5 - scoreCount);
             comments.push({
                 name: cmt.nickName,
+                avatar: cmt.avatar,
                 content: score + "&nbsp;".repeat(24) + cmt.awesome + "❤️<br>" + cmt.content,
                 description: cmt.createTimeFormat
             });

@@ -1,7 +1,12 @@
 load('config.js');
 function execute(url) {
     url = url.replace(/^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)/img, BASE_URL);
-    let response = fetch(url);
+    let response = fetch(url, {
+        headers: {
+            "user-agent": UserAgent.system()
+        },
+    });
+    
     if (response.ok) {
         let doc = response.html();
         let chapters = [];
@@ -15,10 +20,10 @@ function execute(url) {
                 vol.select("ul.children li.child").forEach(li => {
                     let a = li.select("a").first();
                     chapters.push({
-                        name: a.text().replace("new 最新章节VIP优先看", "(VIP)").trim(),
+                        name: a.text().replace("最新章节VIP优先看", "(VIP)").trim(),
                         url: BASE_URL + a.attr("href"),
-                        pay: li.select("> span").text().includes("U币"),
-                        lock: li.select("> span").text().includes("注册会员") || a.select(".new").size() > 0,
+                        pay: li.select("span").last().text().includes("U币"),
+                        lock: li.select("span").last().text().includes("注册会员") || a.text().includes("最新章节VIP优先看"),
                         host: BASE_URL
                     });
                 });
@@ -29,10 +34,10 @@ function execute(url) {
             doc.select(".catalog_ul li.menu").forEach(li => {
                 let a = li.select("a").first();
                 chapters.push({
-                    name: a.text().replace("new 最新章节VIP优先看", "(VIP)").trim(),
+                    name: a.text().replace("最新章节VIP优先看", "(VIP)").trim(),
                     url: BASE_URL + a.attr("href"),
-                    pay: li.select("> span").text().includes("U币"),
-                    lock: li.select("> span").text().includes("注册会员") || a.select(".new").size() > 0,
+                    pay: li.select("span").last().text().includes("U币"),
+                    lock: li.select("span").last().text().includes("注册会员") || a.text().includes("最新章节VIP优先看"),
                     host: BASE_URL
                 });
             });

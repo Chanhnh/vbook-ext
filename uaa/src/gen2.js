@@ -2,7 +2,12 @@ load('config.js');
 
 function execute(url) {
     url = url.replace(/^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)/img, BASE_URL);
-    let response = fetch(BASE_URL + url);
+    let response = fetch(BASE_URL + url, {
+        headers: {
+            "user-agent": UserAgent.system()
+        },
+    });
+    
     if (response.ok) {
         let doc = response.html();
         const data = [];

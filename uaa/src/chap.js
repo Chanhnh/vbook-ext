@@ -1,6 +1,7 @@
 function execute(url) {
     let response = fetch(url, {
         headers: {
+            "user-agent": UserAgent.system(),
             "Cookie": ""
         }
     });

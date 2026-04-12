@@ -4,6 +4,7 @@ function execute(key, page) {
     if (!page) page = '1';
     let response = fetch(BASE_URL + "/novel/list?searchType=1&keyword=" + encodeURIComponent(key) + "&page=" + page, {
         headers: {
+            "user-agent": UserAgent.system(),
             "Cookie": ""
         }
     });

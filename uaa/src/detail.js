@@ -2,7 +2,12 @@ load('config.js');
 function execute(url) {
     url = url.replace(/^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)/img, BASE_URL);
     let id = url.match(/id=(\d+)/)[1];
-    let response = fetch(url);
+    let response = fetch(url, {
+        headers: {
+            "user-agent": UserAgent.system()
+        },
+    });
+    
     if (response.ok) {
         let doc = response.html();
         let cover = doc.select('div.novel_box img.cover').attr("src");
