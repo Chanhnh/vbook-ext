@@ -17,6 +17,7 @@ function execute(url, page) {
             let score = "⭐".repeat(scoreCount) + '☆'.repeat(5 - scoreCount);
             comments.push({
                 name: cmt.user_info.user_name,
+                avatar: cmt.user_info.user_avatar,
                 content: score + "&nbsp;".repeat(24) + cmt.digg_count + "❤️  " + cmt.reply_count + "🗨️<br>" + cmt.text,
                 description: formatChineseDate(cmt.create_timestamp)
             });
