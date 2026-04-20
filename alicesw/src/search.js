@@ -1,7 +1,12 @@
 load('config.js');
 function execute(key, page) {
     if (!page) page = '1';
-    let response = fetch(BASE_URL + "/search.html?q=" + encodeURIComponent(key) + "&f=title&p=" + page);
+    let response = fetch(BASE_URL + "/search.html?q=" + encodeURIComponent(key) + "&f=title&p=" + page, {
+        headers: {
+            'user-agent': UserAgent.chrome()
+        }
+    });
+
     if (response.ok) {
         let doc = response.html();
         const data = [];

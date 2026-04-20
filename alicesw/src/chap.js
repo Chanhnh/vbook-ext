@@ -1,5 +1,6 @@
 function execute(url) {
     var browser = Engine.newBrowser();
+    browser.setUserAgent(UserAgent.chrome());
     browser.launchAsync(url);
     sleep(5000);
     doc = browser.html();

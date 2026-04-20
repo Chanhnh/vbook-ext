@@ -5,7 +5,12 @@ function execute(url) {
     const match = url.match(regex);
     let book_id = match[1];
     console.log(book_id)
-    let response = fetch(BASE_URL + "/other/chapters/id/" + book_id +".html");
+    let response = fetch(BASE_URL + "/other/chapters/id/" + book_id +".html", {
+        headers: {
+            'user-agent': UserAgent.chrome()
+        }
+    });
+
     if (response.ok) {
         let doc = response.html();
         let chapters = [];

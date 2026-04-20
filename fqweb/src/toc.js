@@ -8,7 +8,12 @@ function execute(url) {
     let newurl = `https://fanqienovel.com/page/${book_id}`
     console.log(newurl)
     
-	let response = fetch(newurl);
+	let response = fetch(newurl, {
+        headers: {
+            'user-agent': UserAgent.chrome()
+        }
+    });
+
     if (response.ok) {
         let doc = response.html();
         
