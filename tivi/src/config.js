@@ -1,0 +1,1 @@
+let xacnhan = "Tôi đã được quán triệt các rủi ro khi sử dụng ext này. Tôi cam kết sẽ xoá ext trong vòng 36h sau khi cài đặt và không lưu trữ ext này dưới bất kỳ hình thức nào, dồng thời không chia sẻ ext này cho bất kỳ ai. Tôi hiểu rõ việc tiếp tục sử dụng ext đồng nghĩa với việc tôi đang vi phạm pháp luật Việt Nam và tôi hoàn toàn có thể bị khởi tố hình sự bởi Bộ Công An.";

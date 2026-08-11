@@ -1,0 +1,1230 @@
+```html
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>M3U → DATA.js Converter</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px;
+
+            background: #f5f5f5;
+
+            font-family:
+                Arial,
+                sans-serif;
+        }
+
+        .container {
+            max-width: 900px;
+
+            margin: auto;
+
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 4px 20px
+                rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        .file-box {
+            border:
+                2px dashed #aaa;
+
+            border-radius: 10px;
+
+            padding: 25px;
+
+            text-align: center;
+
+            margin: 20px 0;
+        }
+
+        .url-box {
+            display: flex;
+
+            gap: 10px;
+
+            margin: 20px 0;
+        }
+
+        .url-box input {
+            flex: 1;
+
+            padding: 12px;
+
+            border:
+                1px solid #ccc;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+        }
+
+        input[type="file"] {
+            margin: 10px;
+        }
+
+        button {
+            border: 0;
+
+            padding:
+                12px 20px;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            cursor: pointer;
+
+            background: #1677ff;
+
+            color: white;
+        }
+
+        button:hover {
+            background: #095dcc;
+        }
+
+        button:disabled {
+            background: #aaa;
+
+            cursor: not-allowed;
+        }
+
+        .convert-box {
+            text-align: center;
+
+            margin: 20px 0;
+        }
+
+        .convert-button {
+            font-size: 16px;
+
+            padding:
+                14px 25px;
+        }
+
+        #status {
+            margin-top: 20px;
+
+            padding: 15px;
+
+            border-radius: 8px;
+
+            background: #f0f0f0;
+
+            white-space: pre-line;
+
+            word-break: break-word;
+        }
+
+        .preview {
+            margin-top: 25px;
+        }
+
+        textarea {
+            width: 100%;
+
+            height: 450px;
+
+            resize: vertical;
+
+            font-family: monospace;
+
+            font-size: 13px;
+
+            padding: 12px;
+
+            border:
+                1px solid #ccc;
+
+            border-radius: 8px;
+        }
+
+        .hint {
+            color: #666;
+
+            font-size: 13px;
+
+            margin-top: 8px;
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <h1>M3U → data.js</h1>
+
+    <p>
+        Chuyển file M3U/M3U8 thành cấu trúc
+        <code>var DATA = {...};</code>
+    </p>
+
+
+    <!-- =====================================================
+         CHỌN FILE
+    ====================================================== -->
+
+    <div class="file-box">
+
+        <strong>
+            Chọn file M3U từ máy
+        </strong>
+
+        <br>
+
+        <input
+            type="file"
+            id="fileInput"
+            accept=".m3u,.m3u8,text/plain"
+        >
+
+    </div>
+
+
+    <!-- =====================================================
+         URL
+    ====================================================== -->
+
+    <div>
+
+        <strong>
+            Hoặc nhập URL file M3U
+        </strong>
+
+        <div class="url-box">
+
+            <input
+                type="text"
+                id="urlInput"
+                placeholder="https://example.com/playlist.m3u"
+            >
+
+            <button id="loadUrlBtn">
+                Tải URL
+            </button>
+
+        </div>
+
+        <div class="hint">
+            Nếu URL không cho phép CORS,
+            trình duyệt có thể không tải được.
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         CONVERT
+    ====================================================== -->
+
+    <div class="convert-box">
+
+        <button
+            id="convertBtn"
+            class="convert-button"
+            disabled
+        >
+            Convert & Download data.js
+        </button>
+
+    </div>
+
+
+    <!-- =====================================================
+         STATUS
+    ====================================================== -->
+
+    <div id="status">
+        Chưa chọn file hoặc nhập URL.
+    </div>
+
+
+    <!-- =====================================================
+         PREVIEW
+    ====================================================== -->
+
+    <div class="preview">
+
+        <h3>
+            Preview data.js
+        </h3>
+
+        <textarea
+            id="preview"
+            readonly
+            placeholder="Nội dung data.js sẽ xuất hiện ở đây..."
+        ></textarea>
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+// ============================================================
+// ELEMENTS
+// ============================================================
+
+const fileInput =
+    document.getElementById("fileInput");
+
+const urlInput =
+    document.getElementById("urlInput");
+
+const loadUrlBtn =
+    document.getElementById("loadUrlBtn");
+
+const convertBtn =
+    document.getElementById("convertBtn");
+
+const statusBox =
+    document.getElementById("status");
+
+const preview =
+    document.getElementById("preview");
+
+
+let selectedFile = null;
+
+let loadedContent = null;
+
+
+// ============================================================
+// CHỌN FILE
+// ============================================================
+
+fileInput.addEventListener(
+    "change",
+    function () {
+
+        selectedFile =
+            this.files[0];
+
+        loadedContent = null;
+
+        if (!selectedFile) {
+
+            convertBtn.disabled = true;
+
+            statusBox.textContent =
+                "Chưa chọn file.";
+
+            return;
+        }
+
+
+        convertBtn.disabled = false;
+
+
+        statusBox.textContent =
+            "Đã chọn file:\n\n" +
+
+            selectedFile.name +
+
+            "\n\nKích thước: " +
+
+            formatBytes(
+                selectedFile.size
+            );
+
+    }
+);
+
+
+// ============================================================
+// CLEAN URL
+// ============================================================
+
+function cleanUrl(value) {
+
+    value =
+        value.trim();
+
+
+    /*
+        Xử lý:
+
+        [https://example.com/test](https://example.com/test)
+
+        thành:
+
+        https://example.com/test
+    */
+
+    const match =
+        value.match(
+            /^\[([^\]]+)\]\(([^)]+)\)$/
+        );
+
+
+    if (match) {
+
+        return match[2];
+    }
+
+
+    return value;
+}
+
+
+// ============================================================
+// LẤY ATTRIBUTE TỪ EXTINF
+// ============================================================
+
+function getAttribute(
+    line,
+    attribute
+) {
+
+    const regex =
+        new RegExp(
+            attribute +
+            '="([^"]*)"',
+            "i"
+        );
+
+
+    const match =
+        line.match(regex);
+
+
+    return match
+        ? cleanUrl(match[1])
+        : "";
+}
+
+
+// ============================================================
+// CHUYỂN EXTVLCOPT SANG HEADER
+// ============================================================
+
+function convertHeaderName(
+    name
+) {
+
+    name =
+        name
+            .trim()
+            .toLowerCase();
+
+
+    /*
+        VLC:
+
+        http-user-agent
+
+        -->
+
+        User-Agent
+    */
+
+    if (
+        name ===
+        "http-user-agent"
+    ) {
+
+        return "User-Agent";
+    }
+
+
+    /*
+        VLC:
+
+        http-referrer
+
+        -->
+
+        Referer
+    */
+
+    if (
+        name ===
+        "http-referrer"
+    ) {
+
+        return "Referer";
+    }
+
+
+    /*
+        Các loại:
+
+        http-cookie
+        http-origin
+        http-host
+        http-accept
+
+        ...
+
+        sẽ được chuyển thành:
+
+        Cookie
+        Origin
+        Host
+        Accept
+    */
+
+    if (
+        name.startsWith("http-")
+    ) {
+
+        const headerName =
+            name.substring(5);
+
+
+        return headerName
+            .split("-")
+            .map(
+                part =>
+                    part.charAt(0)
+                        .toUpperCase() +
+                    part.substring(1)
+            )
+            .join("-");
+    }
+
+
+    return name;
+}
+
+
+// ============================================================
+// PARSE EXTVLCOPT
+// ============================================================
+
+function parseVlcOpt(
+    line
+) {
+
+    /*
+        Ví dụ:
+
+        #EXTVLCOPT:http-user-agent=Mozilla/5.0
+
+        #EXTVLCOPT:http-referrer=https://example.com/
+
+        #EXTVLCOPT:http-cookie=abc=123
+    */
+
+    const match =
+        line.match(
+            /^#EXTVLCOPT:([^=]+)=(.*)$/i
+        );
+
+
+    if (!match) {
+
+        return null;
+    }
+
+
+    const rawName =
+        match[1].trim();
+
+
+    const value =
+        cleanUrl(
+            match[2].trim()
+        );
+
+
+    const headerName =
+        convertHeaderName(
+            rawName
+        );
+
+
+    return {
+
+        name: headerName,
+
+        value: value
+
+    };
+}
+
+
+// ============================================================
+// PARSE EXTINF
+// ============================================================
+
+function parseExtinf(
+    line
+) {
+
+    const group =
+        getAttribute(
+            line,
+            "group-title"
+        ) ||
+        "Unknown";
+
+
+    const logo =
+        getAttribute(
+            line,
+            "tvg-logo"
+        );
+
+
+    /*
+        Tên kênh nằm sau dấu ,
+    */
+
+    const commaIndex =
+        line.indexOf(",");
+
+
+    let name = "";
+
+
+    if (
+        commaIndex !== -1
+    ) {
+
+        name =
+            line
+                .substring(
+                    commaIndex + 1
+                )
+                .trim();
+    }
+
+
+    return {
+
+        name: name,
+
+        logo: logo,
+
+        group: group
+
+    };
+}
+
+
+// ============================================================
+// PARSE M3U
+// ============================================================
+
+function parseM3U(
+    content
+) {
+
+    const lines =
+        content.split(
+            /\r?\n/
+        );
+
+
+    const categories = {};
+
+
+    let channelCount = 0;
+
+    let skippedCount = 0;
+
+
+    for (
+        let i = 0;
+        i < lines.length;
+        i++
+    ) {
+
+        const line =
+            lines[i].trim();
+
+
+        /*
+            Tìm EXTINF
+        */
+
+        if (
+            !line.startsWith(
+                "#EXTINF:"
+            )
+        ) {
+
+            continue;
+        }
+
+
+        const channel =
+            parseExtinf(
+                line
+            );
+
+
+        /*
+            Headers của channel
+        */
+
+        const headers = {};
+
+
+        /*
+            Bắt đầu đọc các dòng
+            sau EXTINF
+        */
+
+        let j = i + 1;
+
+
+        while (
+            j < lines.length
+        ) {
+
+            const nextLine =
+                lines[j].trim();
+
+
+            /*
+                EXTVLCOPT
+            */
+
+            if (
+                nextLine
+                    .toUpperCase()
+                    .startsWith(
+                        "#EXTVLCOPT:"
+                    )
+            ) {
+
+                const option =
+                    parseVlcOpt(
+                        nextLine
+                    );
+
+
+                if (option) {
+
+                    headers[
+                        option.name
+                    ] =
+                        option.value;
+                }
+
+
+                j++;
+
+                continue;
+            }
+
+
+            /*
+                Một số directive khác
+                thì bỏ qua
+            */
+
+            if (
+                nextLine.startsWith("#")
+            ) {
+
+                j++;
+
+                continue;
+            }
+
+
+            /*
+                Dòng URL
+            */
+
+            if (nextLine) {
+
+                channel.url =
+                    cleanUrl(
+                        nextLine
+                    );
+
+                break;
+            }
+
+
+            j++;
+        }
+
+
+        /*
+            Không tìm thấy URL
+        */
+
+        if (!channel.url) {
+
+            skippedCount++;
+
+            continue;
+        }
+
+
+        /*
+            Chỉ thêm headers
+            khi thực sự có
+        */
+
+        if (
+            Object.keys(headers)
+                .length > 0
+        ) {
+
+            channel.headers =
+                headers;
+        }
+
+
+        /*
+            Tạo category
+        */
+
+        if (
+            !categories[
+                channel.group
+            ]
+        ) {
+
+            categories[
+                channel.group
+            ] = [];
+        }
+
+
+        categories[
+            channel.group
+        ].push(
+            channel
+        );
+
+
+        channelCount++;
+
+
+        /*
+            Đưa i tới dòng URL.
+
+            Vòng for tiếp tục
+            từ sau URL.
+        */
+
+        i = j;
+
+    }
+
+
+    return {
+
+        categories,
+
+        channelCount,
+
+        skippedCount
+
+    };
+}
+
+
+// ============================================================
+// TẠO DATA.JS
+// ============================================================
+
+function generateJS(
+    categories
+) {
+
+    const json =
+        JSON.stringify(
+            {
+                categories:
+                    categories
+            },
+            null,
+            4
+        );
+
+
+    return (
+        "var DATA = " +
+        json +
+        ";\n"
+    );
+}
+
+
+// ============================================================
+// DOWNLOAD
+// ============================================================
+
+function downloadFile(
+    content
+) {
+
+    const blob =
+        new Blob(
+            [content],
+            {
+                type:
+                    "application/javascript;charset=utf-8"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const a =
+        document.createElement(
+            "a"
+        );
+
+
+    a.href = url;
+
+    a.download =
+        "data.js";
+
+
+    document.body.appendChild(
+        a
+    );
+
+
+    a.click();
+
+
+    a.remove();
+
+
+    URL.revokeObjectURL(
+        url
+    );
+}
+
+
+// ============================================================
+// FORMAT FILE SIZE
+// ============================================================
+
+function formatBytes(
+    bytes
+) {
+
+    if (
+        bytes === 0
+    ) {
+
+        return "0 Bytes";
+    }
+
+
+    const units = [
+        "Bytes",
+        "KB",
+        "MB",
+        "GB"
+    ];
+
+
+    const index =
+        Math.floor(
+            Math.log(bytes) /
+            Math.log(1024)
+        );
+
+
+    return (
+        bytes /
+        Math.pow(
+            1024,
+            index
+        )
+    ).toFixed(2) +
+
+        " " +
+
+        units[index];
+}
+
+
+// ============================================================
+// CONVERT CONTENT
+// ============================================================
+
+function convertContent(
+    content,
+    sourceName
+) {
+
+    try {
+
+        statusBox.textContent =
+            "Đang phân tích M3U...";
+
+
+        const result =
+            parseM3U(
+                content
+            );
+
+
+        const js =
+            generateJS(
+                result.categories
+            );
+
+
+        /*
+            Preview
+        */
+
+        preview.value =
+            js;
+
+
+        /*
+            Download
+        */
+
+        downloadFile(
+            js
+        );
+
+
+        const groupCount =
+            Object.keys(
+                result.categories
+            ).length;
+
+
+        statusBox.textContent =
+            "Hoàn tất!\n\n" +
+
+            "Nguồn: " +
+            sourceName +
+
+            "\nSố group: " +
+            groupCount +
+
+            "\nSố kênh: " +
+            result.channelCount +
+
+            "\nBỏ qua: " +
+            result.skippedCount +
+
+            "\n\nĐã tải: data.js";
+
+
+        return true;
+
+    } catch (error) {
+
+        console.error(
+            error
+        );
+
+
+        statusBox.textContent =
+            "Lỗi khi xử lý:\n\n" +
+            error.message;
+
+
+        return false;
+    }
+}
+
+
+// ============================================================
+// CONVERT FILE
+// ============================================================
+
+convertBtn.addEventListener(
+    "click",
+    async function () {
+
+        if (
+            !selectedFile
+        ) {
+
+            return;
+        }
+
+
+        try {
+
+            convertBtn.disabled =
+                true;
+
+
+            statusBox.textContent =
+                "Đang đọc file...";
+
+
+            const content =
+                await selectedFile.text();
+
+
+            convertContent(
+                content,
+                selectedFile.name
+            );
+
+        } finally {
+
+            convertBtn.disabled =
+                false;
+        }
+
+    }
+);
+
+
+// ============================================================
+// TẢI M3U TỪ URL
+// ============================================================
+
+loadUrlBtn.addEventListener(
+    "click",
+    async function () {
+
+        const url =
+            urlInput.value.trim();
+
+
+        if (!url) {
+
+            statusBox.textContent =
+                "Vui lòng nhập URL file M3U.";
+
+            return;
+        }
+
+
+        try {
+
+            loadUrlBtn.disabled =
+                true;
+
+            convertBtn.disabled =
+                true;
+
+
+            statusBox.textContent =
+                "Đang tải M3U từ URL...";
+
+
+            const response =
+                await fetch(
+                    url
+                );
+
+
+            if (
+                !response.ok
+            ) {
+
+                throw new Error(
+                    "HTTP " +
+                    response.status +
+                    " - Không thể tải file."
+                );
+            }
+
+
+            const content =
+                await response.text();
+
+
+            /*
+                Tự động convert luôn,
+                không cần bấm thêm nút.
+            */
+
+            convertContent(
+                content,
+                url
+            );
+
+        } catch (error) {
+
+            console.error(
+                error
+            );
+
+
+            statusBox.textContent =
+                "Không thể tải URL:\n\n" +
+
+                error.message +
+
+                "\n\n" +
+
+                "Nếu lỗi CORS, server M3U " +
+                "không cho phép trình duyệt " +
+                "truy cập trực tiếp.";
+
+        } finally {
+
+            loadUrlBtn.disabled =
+                false;
+
+            convertBtn.disabled =
+                !selectedFile;
+        }
+
+    }
+);
+
+
+// ============================================================
+// ENTER TRONG Ô URL
+// ============================================================
+
+urlInput.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (
+            event.key === "Enter"
+        ) {
+
+            loadUrlBtn.click();
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
+```

@@ -3,7 +3,7 @@ load('config.js');
 
 function execute(url) {
 
-    const regex = /(?:book_id=|\/)(\d+)$/;
+    const regex = /(?:\/page\/|[?&]book_id=)(\d+)/;
     let book_id = url.match(regex)[1]
     let newurl = `https://fanqienovel.com/page/${book_id}`
     console.log(newurl)

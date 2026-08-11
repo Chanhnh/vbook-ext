@@ -1,6 +1,6 @@
 load('config.js');
 function execute(url) {
-    const regex = /(?:book_id=|\/)(\d+)$/;
+    const regex = /(?:\/page\/|[?&]book_id=)(\d+)/;
     let book_id = url.match(regex)[1]
 
     // let book_id = url.split("book_id=")[1]
@@ -52,7 +52,7 @@ function execute(url) {
                         最后更新: ${last_chapter_title}`,
             suggests: [
                 {
-                    title: book_info.author,
+                    title: Qt.translate(book_info.author, "hv").translateText,
                     input: `https://api5-normal-sinfonlinec.fqnovel.com/reading/user/basic_info/get/v?user_id=${authorID}&aid=1967&version_code=65532`,
                     script: "suggest.js"
                 }
@@ -77,4 +77,5 @@ function formatChineseDate(timestamp) {
     const minutes = String(date.getMinutes()).padStart(2, '0');
     return `${day}/${month}/${year} ${hours}:${minutes}`;
 }
+
 

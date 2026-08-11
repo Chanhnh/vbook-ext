@@ -1,0 +1,4 @@
+Bạn có thể tạo data tuỳ chỉnh bằng file "port_data_from_m3u.html"
+Ext được viết bởi sự hỗ trợ của Gemini 3.6 flash low
+Xin lỗi vì quá gà nên không viết được ext có thể nhập trực tiếp link/file m3u :(
+--Chanhnh--
