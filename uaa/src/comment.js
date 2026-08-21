@@ -8,7 +8,7 @@ function execute(url, page) {
             "user-agent": UserAgent.system()
         },
     });
-    
+
     if (response.ok) {
         let json = response.json();
         let cmtList = json.data;
@@ -16,11 +16,44 @@ function execute(url, page) {
         cmtList.forEach(cmt => {
             let scoreCount = Math.round(cmt.score / 2);
             let score = "⭐".repeat(scoreCount) + '☆'.repeat(5 - scoreCount);
+
+            let replies = [];
+
+            // Chỉ load replies khi lave khác 0
+            if (Number(cmt.lave || 0) > 0) {
+                let replyUrl =
+                    "https://www.uaa.com/api/novel/app/novel/subcomments?parentId=" + cmt.id + "&lave=" + cmt.lave;
+
+                let replyResponse = fetch(replyUrl, {
+                    headers: {
+                        "User-Agent": UserAgent.android()
+                    }
+                });
+
+                if (replyResponse.ok) {
+                    let replyJson = replyResponse.json();
+                    let replyList = Array.isArray(replyJson.data)
+                        ? replyJson.data
+                        : [];
+
+                    replies = replyList.map(function (r) {
+                        return {
+                            name: r.nickName + " ► " + r.replyNickName,
+                            avatar: r.avatar,
+                            content: r.content,
+                            description: r.createTimeFormat + "    •   " + r.awesome + "❤️",
+                            replies: []
+                        };
+                    });
+                }
+            }
+
             comments.push({
                 name: cmt.nickName,
                 avatar: cmt.avatar,
-                content: score + "&nbsp;".repeat(24) + cmt.awesome + "❤️<br>" + cmt.content,
-                description: cmt.createTimeFormat
+                content: score + "<br>" + cmt.content,
+                description: cmt.createTimeFormat + "    •   " + cmt.awesome + "❤️",
+                replies: replies
             });
         });
         let next = parseInt(page, 10) + 1

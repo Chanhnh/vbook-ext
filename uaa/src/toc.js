@@ -1,48 +1,63 @@
 load('config.js');
+
 function execute(url) {
-    url = url.replace(/^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)/img, BASE_URL);
+    url = url.replace(
+        /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)/img,
+        BASE_URL
+    );
+
     let response = fetch(url, {
         headers: {
             "user-agent": UserAgent.system()
-        },
-    });
-    
-    if (response.ok) {
-        let doc = response.html();
-        let chapters = [];
-        // dạng có volume
-        if (doc.select(".catalog_ul li.volume").size() > 0) {
-            doc.select(".catalog_ul > li.volume").forEach(vol => {
-                let volumeName = vol.select("span").first().text().trim();
-                chapters.push({
-                    name: "【" + volumeName + "】"
-                });
-                vol.select("ul.children li.child").forEach(li => {
-                    let a = li.select("a").first();
-                    chapters.push({
-                        name: a.text().replace("最新章节VIP优先看", "(VIP)").trim(),
-                        url: BASE_URL + a.attr("href"),
-                        pay: li.select("span").last().text().includes("U币"),
-                        lock: li.select("span").last().text().includes("注册会员") || a.text().includes("最新章节VIP优先看"),
-                        host: BASE_URL
-                    });
-                });
-            });
         }
-        // dạng không volume
-        else {
-            doc.select(".catalog_ul li.menu").forEach(li => {
-                let a = li.select("a").first();
+    });
+
+    if (!response.ok) {
+        return null;
+    }
+
+    let doc = response.html();
+    let chapters = [];
+
+    // Có volume
+    let volumes = doc.select('#ndcBody .ndc-vol');
+
+    if (volumes.size() > 0) {
+        volumes.forEach(vol => {
+            let volumeName = vol.select('.ndc-vol__t').text().trim();
+
+            chapters.push({
+                name: "【" + volumeName + "】"
+            });
+
+            vol.select('.ndc-row').forEach(a => {
+                let acc = a.select('.ndc-acc').text().trim();
+
                 chapters.push({
-                    name: a.text().replace("最新章节VIP优先看", "(VIP)").trim(),
-                    url: BASE_URL + a.attr("href"),
-                    pay: li.select("span").last().text().includes("U币"),
-                    lock: li.select("span").last().text().includes("注册会员") || a.text().includes("最新章节VIP优先看"),
+                    name: a.select('.ndc-name').text().trim(),
+                    url: BASE_URL + a.attr('href'),
+                    pay: acc.includes("U币"),
+                    lock: acc.includes("注册会员"),
                     host: BASE_URL
                 });
             });
-        }
-        return Response.success(chapters);
+        });
     }
-    return null;
+
+    // Không có volume
+    else {
+        doc.select('#ndcBody > .ndc-row').forEach(a => {
+            let acc = a.select('.ndc-acc').text().trim();
+
+            chapters.push({
+                name: a.select('.ndc-name').text().trim(),
+                url: BASE_URL + a.attr('href'),
+                pay: acc.includes("U币"),
+                lock: acc.includes("注册会员"),
+                host: BASE_URL
+            });
+        });
+    }
+
+    return Response.success(chapters);
 }

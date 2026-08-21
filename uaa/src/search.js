@@ -2,24 +2,22 @@ load('config.js');
 
 function execute(key, page) {
     if (!page) page = '1';
-    let response = fetch(BASE_URL + "/novel/list?searchType=1&keyword=" + encodeURIComponent(key) + "&page=" + page, {
+    let response = fetch(BASE_URL + "/novel/load?keyword=" + encodeURIComponent(key) + "&searchType=2&page=" + page, {
         headers: {
             "user-agent": UserAgent.system(),
             "Cookie": ""
         }
     });
     if (response.ok) {
-        let doc = response.html();
-        if (doc.html().includes("游客)无法进行此操作"))
-            return Response.error("抱歉，您所在的用户组(游客)无法进行此操作\n(Cần đăng nhập)");
+        let json = response.json();
         const data = [];
-        doc.select(".main_box .novel_list_box ul li").forEach(e => {
+        json.model.data.forEach(e => {
             data.push({
-                name: e.select(".cover_box a").attr('title'),
-                      link: e.select(".cover_box a").attr('href'),
-                      cover: e.select(".cover_box a img").attr('src'),
-                      description: e.select(".info_box a").first().text(),
-                      host: BASE_URL
+                name: e.title,
+                link: BASE_URL + "/novel/intro?id=" + e.id,
+                cover: e.coverUrl,
+                description: e.authors,
+                tag: e.score
             });
         });
 

@@ -18,8 +18,17 @@ function execute(url, page) {
             comments.push({
                 name: cmt.user_info.user_name,
                 avatar: cmt.user_info.user_avatar,
-                content: score + "&nbsp;".repeat(24) + cmt.digg_count + "❤️  " + cmt.reply_count + "🗨️<br>" + cmt.text,
-                description: formatChineseDate(cmt.create_timestamp)
+                content: score + "<br>" + cmt.text,
+                description: formatChineseDate(cmt.create_timestamp) + "    •   " + cmt.digg_count + "❤️  " + cmt.reply_count + "🗨️",
+                replies: (cmt.reply_list || []).map(function (r) {
+                    return {
+                        name: r.user_info.user_name,
+                        avatar: r.user_info.user_avatar,
+                        content: r.text,
+                        description: formatChineseDate(r.create_timestamp) + "    •   " + r.digg_count + "❤️",
+                        replies: []
+                    };
+                })
             });
         });
         let next = parseInt(page, 10) + 1

@@ -7,17 +7,16 @@ function execute(url) {
     });
     if (response.ok) {
         let doc = response.html();
-        let article = doc.select("div.article").first();
-        if (article.attr("code") != "0")
-            return Response.error(doc.select("#notice").text().trim());
-        let htm = "";
-        doc.select("div.article div.line").forEach(e => {
-            let line = e.html().trim();
-            if (line) {
-                htm += "<p>" + line + "</p>";
-            }
+        let limit = doc.select("script");
+        if (limit.html().indexOf("code: 0") == -1)
+            return Response.error(Qt.translate(doc.select("div.reader-cap__s.rl-notice").first().text().trim(), "vi", { first_capitalize: true }).translateText);
+
+        let content = "";
+        doc.select("div.reader-body").forEach(e => {
+            e.select(".pc-bub").remove();
+            content = e.select("p").html().trim();
         });
-        return Response.success(htm);
+        return Response.success(content);
     }
     return null;
 }

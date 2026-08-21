@@ -7,50 +7,61 @@ function execute(url) {
             "user-agent": UserAgent.system()
         },
     });
-    
+
     if (response.ok) {
         let doc = response.html();
-        let cover = doc.select('div.novel_box img.cover').attr("src");
-        let name = doc.select('div.info_box h1').text();
-        let status = doc.select('.update_state').text().replace("状态：", "").trim();
-        let detail = doc.select('div.item:contains(最新：)').text() + "<br>" +
-            doc.select('div.item:contains(来源：)').text() + "<br>" +
-            doc.select('div.item:contains(评分：)').text();
-        let infoBox = doc.select("div.props_box li");
-        let sex = infoBox.get(0).text().trim();
-        let text = infoBox.get(1).text().trim();
-        let view = infoBox.get(2).text().trim();
-        let like = infoBox.get(3).text().trim();
-        let author = doc.select('div.item:contains(作者) a').text().trim();
-        let description = doc.select('meta[name="description"]').attr("content");
+        let cover = doc.select('.nd-cover img').attr('src');
+        let name = doc.select('.nd-info h1').text()
+            .replace(doc.select('.nd-fr-inline').text(), '').trim();
+        let author = doc.select('.nd-author__lk').text().trim();
+        let status = doc.select('.nd-tag--live').text().trim();
+        let score = doc.select('.nd-score b').text().trim();
+        let latest = doc.select('.nd-latest').text().trim();
+        let stats = doc.select('.nd-stats .nd-stat');
+
+        let view = "";
+        let like = "";
+        let text = "";
+        stats.forEach(function (e) {
+            let value = e.select('.n').text().trim();
+            let label = e.select('.l').text().trim();
+            if (label === "观看量") {
+                view = value;
+            } else if (label === "收藏量") {
+                like = value;
+            } else if (label === "字数") {
+                text = value;
+            }
+        });
+
+        let description = doc.select('.nd-synopsis').text().trim();
         let genres = [];
-        doc.select('a[href*="category="]').forEach(e =>
+        doc.select('#ndTags a').forEach(e =>
             genres.push({
-                title: e.text(),
+                title: e.text().replace(e.select('em').text(), '').trim(),
                 input: e.attr('href'),
                 script: "gen1.js"
             })
         );
-        doc.select('.tag_box a').forEach(e =>
-            genres.push({
-                title: e.text(),
-                input: e.attr('href'),
-                script: "gen1.js"
-            })
-        );
+
         return Response.success({
             name: name,
             cover: cover,
             author: author,
-            detail: detail + "<br>Sex: " + sex + "<br>Text: " + text + "<br>View: " + view + "<br>Like: " + like,
+            detail: latest +
+                "<br>评分：" + score +
+                "<br>状态：" + status +
+                "<br>观看量：" + view +
+                "<br>收藏量：" + like +
+                "<br>字数：" + text,
             description: description,
             ongoing: status !== "已完结",
             nsfw: true,
             genres: genres,
             suggests: [{
-                title: author,
-                input: doc.select('div.item:contains(作者) a').attr("href"),
-                script: "gen1.js"
+                title: Qt.translate(author, "hv", { first_capitalize: true }).translateText,
+                input: "/novel/load?author=" + author,
+                script: "gen.js"
             }],
             comment: {
                 input: "/api/novel/app/novel/comments?novelId=" + id + "&sortType=1",

@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "name": "UAA",
+    "name": "UAA Novel",
     "author": "Chanhnh",
-    "version": 2,
-    "source": "https://www.uaa.com/",
-    "regexp": "https://(www.)uaa.com/novel/intro?id=\\d+/?$",
+    "version": 3,
+    "source": "https://www.uaa.com/novel/list",
+    "regexp": "https://www.uaa.com/novel/intro?id=\\d+/?$",
     "description": "Đọc truyện trên trang UAA",
     "locale": "zh_CN",
     "language": "javascript",
@@ -15,7 +15,6 @@
     "home": "home.js",
     "detail": "detail.js",
     "toc": "toc.js",
-    "genre": "genre.js",
     "search": "search.js",
     "chap": "chap.js"
   }
