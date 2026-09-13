@@ -2,7 +2,7 @@
   "metadata": {
     "name": "FQWeb Universal",
     "author": "Chanhnh",
-    "version": 4,
+    "version": 5,
     "source": "https://fanqienovel.com",
     "regexp": "fanqienovel.com/page/(\\d+)|fanqienovel.com/info(.*?)|.*?changdunovel\\.com/wap/share-v2\\.html.*?[?&]book_id=(\\d+).*",
     "description": "Fanqie Web Universal. Chỉ dùng được trên vBook beta\nDành cho mục đích phát triển\nCần tham khảo ý kiến các chiên da để sử dụng\nCấu hình các thông tin API trong phần <Cài đặt> ở dưới trước khi sử dụng",
@@ -30,6 +30,18 @@
       "mode": "input",
       "format": "text",
       "default": "data.content"
+    },
+    "cmt_sort": {
+      "title": "Sắp xếp bình luận",
+      "subtitle": "Kiểu sắp xếp cho phần bình luận",
+      "values": [
+        "Đề xuất",
+        "Mới nhất",
+        "Nóng nhất"
+      ],
+      "mode": "select",
+      "format": "single",
+      "default": "Đề xuất"
     }
   }
 }

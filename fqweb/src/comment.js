@@ -2,6 +2,8 @@ load('config.js');
 function execute(url, page) {
     if (!page) page = 1
     url = url.replace("{{page}}", (page - 1) * 10);
+    url += cmt_sort == "Mới nhất" ? "&sort=time" :
+        cmt_sort == "Nóng nhất" ? "&sort=1" : "";
 
     let response = fetch(url, {
         headers: {
@@ -19,13 +21,17 @@ function execute(url, page) {
                 name: cmt.user_info.user_name,
                 avatar: cmt.user_info.user_avatar,
                 content: score + "<br>" + cmt.text,
-                description: formatChineseDate(cmt.create_timestamp) + "    •   " + cmt.digg_count + "❤️  " + cmt.reply_count + "🗨️",
+                description: formatChineseDate(cmt.create_timestamp) +
+                    (cmt.digg_count || cmt.reply_count ? "    •    " : "") +
+                    (cmt.digg_count ? cmt.digg_count + "❤️" : "") +
+                    (cmt.digg_count && cmt.reply_count ? "  " : "") +
+                    (cmt.reply_count ? cmt.reply_count + "🗨️" : ""),
                 replies: (cmt.reply_list || []).map(function (r) {
                     return {
                         name: r.user_info.user_name,
                         avatar: r.user_info.user_avatar,
                         content: r.text,
-                        description: formatChineseDate(r.create_timestamp) + "    •   " + r.digg_count + "❤️",
+                        description: formatChineseDate(r.create_timestamp) +  (r.digg_count ? "    •   " + r.digg_count + "❤️" : ""),
                         replies: []
                     };
                 })
