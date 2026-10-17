@@ -84,6 +84,17 @@
       "description": "Xem truyền hình trực tuyến từ danh sách kênh M3U",
       "type": "video",
       "locale": "vi_VN"
+    },
+    {
+      "name": "Douyin",
+      "author": "Chanhnh",
+      "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/douyin/plugin.zip",
+      "version": 1,
+      "source": "https://www.douyin.com",
+      "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/douyin/icon.png",
+      "description": "Xem video Douyin đề xuất",
+      "type": "video",
+      "locale": "zh_CN"
     }
   ]
 }
