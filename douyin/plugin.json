@@ -1,0 +1,38 @@
+{
+  "metadata": {
+    "name": "Douyin",
+    "author": "Chanhnh",
+    "version": 1,
+    "source": "https://www.douyin.com",
+    "description": "Xem video Douyin đề xuất, đăng nhập hoặc nhập Cookie để đề xuất nội dung cá nhân hóa\nExt chỉ nhận nội dung từ Douyin, không gửi bất cứ thứ gì đến server Douyin",
+    "locale": "zh-CN",
+    "regexp": "(https?://)?(?:www\\.)?(?:douyin\\.com/(?:video|note|modal)/[0-9]+|iesdouyin\\.com/share/video/[0-9]+|v\\.douyin\\.com/[A-Za-z0-9_-]+)(?:[/?][^\\s]*)?",
+    "type": "video",
+    "nsfw": false,
+    "encrypt": true
+  },
+  "script": {
+    "home": "home.js",
+    "search": "search.js",
+    "detail": "detail.js",
+    "toc": "toc.js",
+    "chap": "chap.js",
+    "track": "track.js"
+  },
+  "config": {
+    "ORIENTATION": {
+      "title": "Đề xuất nội dung theo màn hình:",
+      "default": "Dọc",
+      "values": [
+        "Dọc",
+        "Ngang"
+      ],
+      "mode": "select"
+    },
+    "DANMAKU_COLOR": {
+      "title": "Màu Danmaku (Hex):",
+      "default": "#FFFFFF",
+      "mode": "input"
+    }
+  }
+}

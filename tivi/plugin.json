@@ -2,26 +2,49 @@
   "metadata": {
     "name": "Xem tiVi",
     "author": "Chanhnh",
-    "version": 2,
+    "version": 3,
     "source": " ",
+    "description": "Xem truyền hình trực tuyến từ playlist M3U/M3U8 do bạn cấu hình.",
+    "locale": "vi",
     "regexp": "",
-    "description": "Xem truyền hình trực tuyến từ danh sách kênh M3U",
-    "locale": "vi_VN",
-    "language": "javascript",
-    "type": "video"
+    "type": "video",
+    "nsfw": false
   },
   "script": {
     "home": "home.js",
-    "gen": "gen.js",
-    "detail": "detail.js",
+    "genre": "genre.js",
     "search": "search.js",
+    "detail": "detail.js",
     "toc": "toc.js",
     "chap": "chap.js",
     "track": "track.js"
   },
+  "actions": {
+    "refresh_playlist": {
+      "name": "Làm mới playlist",
+      "description": "Tải lại các URL trong Playlist M3U và cập nhật các dòng tương ứng; giữ nguyên dòng thủ công",
+      "script": "refresh.js"
+    }
+  },
   "config": {
-    "xacnhan1": {
-      "title": "Nhập \"Tôi đã được quán triệt các rủi ro khi sử dụng ext này. Tôi cam kết sẽ xoá ext trong vòng 36h sau khi cài đặt và không lưu trữ ext này dưới bất kỳ hình thức nào, dồng thời không chia sẻ ext này cho bất kỳ ai. Tôi hiểu rõ việc tiếp tục sử dụng ext đồng nghĩa với việc tôi đang vi phạm pháp luật Việt Nam và tôi hoàn toàn có thể bị khởi tố hình sự bởi Bộ Công An.\" để xác nhận bạn đã đọc cảnh báo và đồng ý với các rủi ro khi sử dụng ext này",
+    "PLAYLIST_URLS": {
+      "title": "Playlist M3U",
+      "subtitle": "URL nguồn dùng cho nút Làm mới playlist; không tự tải lại",
+      "mode": "list",
+      "default": "[]"
+    },
+    "TIVI_PLAYLISTS": {
+      "title": "Playlist đã lưu (M3U)",
+      "mode": "database"
+    },
+    "PLAYLIST_UA": {
+      "title": "User-Agent tải playlist (tuỳ chọn)",
+      "mode": "input",
+      "format": "text",
+      "default": ""
+    },
+    "PLAYLIST_REFERER": {
+      "title": "Referer tải playlist (tuỳ chọn)",
       "mode": "input",
       "format": "text",
       "default": ""
