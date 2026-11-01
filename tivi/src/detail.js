@@ -1,40 +1,34 @@
-// detail.js
-load('data.js');
-
-function getAllChannels() {
-    var all = [];
-    var categories = DATA.categories || {};
-    for (var cat in categories) {
-        if (categories.hasOwnProperty(cat)) {
-            var list = categories[cat] || [];
-            for (var i = 0; i < list.length; i++) {
-                all.push(list[i]);
-            }
-        }
-    }
-    return all;
-}
+load('lib.js');
 
 function execute(url) {
-    var channels = getAllChannels();
-    var channel = null;
-    for (var i = 0; i < channels.length; i++) {
-        if (channels[i].url === url) {
-            channel = channels[i];
-            break;
-        }
+    url = url || "";
+    var channel = tiviFindChannel(url);
+    if (!channel) {
+        return Response.error("Kênh không còn trong dữ liệu đã lưu. Kiểm tra Cài đặt → \"Playlist đã lưu (M3U)\" hoặc bấm \"Làm mới playlist\".");
     }
 
-    if (!channel) {
-        return Response.error("Channel not found");
+    var groups = tiviGroupsOf(channel);
+    var tags = [];
+    for (var i = 0; i < groups.length; i++) {
+        tags.push({
+            title: groups[i],
+            input: "group:" + groups[i],
+            script: "search.js"
+        });
     }
 
     return Response.success({
         name: channel.name,
+        author: groups.join(", "),
         cover: channel.logo || "",
-        author: channel.group || "Tivi",
-        description: "Xem kênh " + channel.name + (channel.group ? " (" + channel.group + ")" : ""),
-        detail: "Group: " + (channel.group || "Tivi"),
-        ongoing: true
+        description: "Kênh " + channel.name + " — nhóm " + groups.join(", "),
+        detail: "Nhóm: " + groups.join(", ") + "\nNguồn: " + tiviHostOf(channel.url),
+        url: channel.url,
+        type: "video",
+        format: "stream",
+        ongoing: true,
+        locale: "vi",
+        nsfw: false,
+        tags: tags
     });
 }

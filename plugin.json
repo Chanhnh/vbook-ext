@@ -18,11 +18,11 @@
     {
       "name": "Xem tiVi",
       "author": "Chanhnh",
-      "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/main/tivi/Archive.zip",
-      "version": 1,
+      "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/main/tivi/plugin.zip",
+      "version": 2,
       "source": " ",
       "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/main/tivi/icon.png",
-      "description": "Xem truyền hình trực tuyến từ danh sách kênh M3U",
+      "description": "Xem truyền hình trực tuyến từ playlist M3U/M3U8 do bạn cấu hình.",
       "type": "video",
       "locale": "vi_VN"
     }
