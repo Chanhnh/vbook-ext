@@ -1,0 +1,33 @@
+{
+  "metadata": {
+    "name": "2048 AI短剧",
+    "author": "Chanhnh",
+    "version": 1,
+    "source": "https://2048ai.vip",
+    "description": "2048 AI成人短剧，原创AI短剧、真实热门黑料在线观看。",
+    "locale": "zh-CN",
+    "regexp": "(https?://)?(www\\.)?(2048ai\\.vip|madouai\\.xyz)/(?:media/)?short-dramas/\\d+(?:/episodes/\\d+)?(?:[/?#][^\\s]*)?",
+    "type": "video",
+    "nsfw": true,
+    "encrypt": true
+  },
+  "script": {
+    "search": "search.js",
+    "explore": "explore.js",
+    "detail": "detail.js",
+    "toc": "toc.js",
+    "chap": "chap.js",
+    "track": "track.js"
+  },
+  "config": {
+    "DOMAIN": {
+      "title": "域名",
+      "default": "https://2048ai.vip",
+      "values": [
+        "https://2048ai.vip",
+        "https://madouai.xyz"
+      ],
+      "mode": "select"
+    }
+  }
+}

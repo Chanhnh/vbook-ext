@@ -13,7 +13,7 @@
       "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/fqweb/icon.png",
       "description": "Fanqie Web Universal. Chỉ dùng được trên vBook beta",
       "type": "chinese_novel",
-      "locale": "zh_CN"
+      "locale": "zh-CN"
     },
     {
       "name": "69shu",
@@ -24,7 +24,7 @@
       "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/69shu/icon.png",
       "description": "Đọc truyện trên trang 69shu",
       "type": "chinese_novel",
-      "locale": "zh_CN"
+      "locale": "zh-CN"
     },
     {
       "name": "alicesw",
@@ -35,7 +35,7 @@
       "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/alicesw/icon.png",
       "description": "Đọc truyện trên trang alicesw",
       "type": "chinese_novel",
-      "locale": "zh_CN",
+      "locale": "zh-CN",
       "tag": "nsfw"
     },
     {
@@ -47,7 +47,7 @@
       "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/yeduge/icon.png",
       "description": "Đọc truyện trên trang yeduge",
       "type": "chinese_novel",
-      "locale": "zh_CN",
+      "locale": "zh-CN",
       "tag": "nsfw"
     },
     {
@@ -59,19 +59,19 @@
       "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/18mh/icon.png",
       "description": "Đọc truyện trên trang 18mh",
       "type": "chinese_novel",
-      "locale": "zh_CN",
+      "locale": "zh-CN",
       "tag": "nsfw"
     },
     {
       "name": "UAA Novel",
       "author": "Chanhnh",
-      "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/uaa/Archive.zip",
+      "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/uaa/plugin.zip",
       "version": 3,
       "source": "https://www.uaa.com/novel/list",
       "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/uaa/icon.png",
       "description": "Đọc truyện trên trang uaa",
       "type": "chinese_novel",
-      "locale": "zh_CN",
+      "locale": "zh-CN",
       "tag": "nsfw"
     },
     {
@@ -89,12 +89,69 @@
       "name": "Douyin",
       "author": "Chanhnh",
       "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/douyin/plugin.zip",
-      "version": 1,
+      "version": 2,
       "source": "https://www.douyin.com",
       "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/douyin/icon.png",
-      "description": "Xem video Douyin đề xuất",
+      "description": "Xem video Douyin Đề xuất và Tinh tuyển, đăng nhập hoặc nhập Cookie để đề xuất nội dung cá nhân hóa\nCó thể bật/tắt gửi lịch sử xem đến Douyin trong cấu hình (mặc định tắt, cần đăng nhập).",
       "type": "video",
-      "locale": "zh_CN"
+      "locale": "zh-CN"
+    },
+    {
+      "name": "2048 AI短剧",
+      "author": "Chanhnh",
+      "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/2048ai/plugin.zip",
+      "version": 1,
+      "source": "https://2048ai.vip",
+      "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/2048ai/icon.png",
+      "description": "2048 AI成人短剧，原创AI短剧、真实热门黑料在线观看。",
+      "type": "video",
+      "locale": "zh-CN",
+      "tag": "nsfw"
+    },
+    {
+      "name": "Bilibili CN",
+      "author": "Chanhnh",
+      "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/bilibili/plugin.zip",
+      "version": 1,
+      "source": "https://www.bilibili.com",
+      "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/bilibili/icon.png",
+      "description": "Cần đăng nhập hoặc nhập cookie nguồn trong vBook. Video công khai, chất lượng theo quyền tài khoản và phụ đề khi có. Không hỗ trợ Bangumi hoặc video trả phí.",
+      "type": "video",
+      "locale": "zh-CN"
+    },
+    {
+      "name": "Fanqie Manhua",
+      "author": "Chanhnh",
+      "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/fq-manhua/plugin.zip",
+      "version": 1,
+      "source": "https://fanqienovel.com",
+      "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/fq-manhua/icon.png",
+      "description": "Truyện tranh Fanqie (番茄漫画). Tìm kiếm, mục lục và chương dùng API app.\nBấm action Đăng ký device mới trước khi xem thể loại, tìm kiếm hoặc đọc chương; đăng ký mới sẽ thay device cũ.\nDevice bị thu hồi thì bấm Đăng ký device mới để thay.",
+      "type": "comic",
+      "locale": "zh-CN"
+    },
+    {
+      "name": "Fanqie Novel",
+      "author": "Chanhnh",
+      "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/fq-novel/plugin.zip",
+      "version": 1,
+      "source": "https://fanqienovel.com",
+      "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/fq-novel/icon.png",
+      "description": "Nội dung chương lấy trực tiếp từ API app Fanqie.\nBấm action Đăng ký device mới trước khi đọc chương; đăng ký mới sẽ thay device cũ.\nDevice bị thu hồi thì bấm Đăng ký device mới để thay.",
+      "type": "chinese_novel",
+      "locale": "zh-CN"
+    },
+    {
+      "name": "黄果短剧 (Huangguo AI)",
+      "author": "Chanhnh",
+      "path": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/huangguoai/plugin.zip",
+      "version": 1,
+      "source": "https://huangguoai.com",
+      "icon": "https://raw.githubusercontent.com/Chanhnh/vbook-ext/next/huangguoai/icon.png",
+      "description": "Xem phim ngắn AI. Hỗ trợ tìm kiếm, thể loại, đề xuất, bình luận và phát trực tiếp HLS.",
+      "type": "video",
+      "locale": "zh-CN",
+      "tag": "nsfw"
     }
   ]
 }

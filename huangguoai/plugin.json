@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "name": "黄果短剧 (Huangguo AI)",
+    "author": "Chanhnh",
+    "version": 1,
+    "source": "https://huangguoai.com",
+    "description": "Xem phim ngắn AI. Hỗ trợ tìm kiếm, thể loại, đề xuất, bình luận và phát trực tiếp HLS.",
+    "locale": "zh-CN",
+    "regexp": "^(?:https?:\\/\\/)?(?:www\\.)?huangguoai\\.com\\/video\\/\\d+(?:\\/(?:ep-\\d+)?)?\\/?$",
+    "type": "video",
+    "nsfw": true,
+    "encrypt": true
+  },
+  "script": {
+    "home": "home.js",
+    "explore": "explore.js",
+    "genre": "genre.js",
+    "search": "search.js",
+    "detail": "detail.js",
+    "toc": "toc.js",
+    "chap": "chap.js",
+    "track": "track.js"
+  },
+  "config": {
+    "DOMAIN": {
+      "title": "域名",
+      "default": "https://huangguoai.com",
+      "mode": "input",
+      "format": "text"
+    }
+  }
+}

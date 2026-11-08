@@ -1,0 +1,41 @@
+{
+  "metadata": {
+    "name": "Bilibili CN",
+    "author": "Chanhnh",
+    "version": 1,
+    "source": "https://www.bilibili.com",
+    "description": "Cần đăng nhập hoặc nhập cookie nguồn trong vBook. Video công khai, chất lượng theo quyền tài khoản và phụ đề khi có. Không hỗ trợ Bangumi hoặc video trả phí.",
+    "locale": "zh-CN",
+    "regexp": "(?:https?://)?(?:www\\.)?bilibili\\.com/video/BV[0-9A-Za-z]{10}/?(?:[?#].*)?",
+    "type": "video",
+    "nsfw": false,
+    "encrypt": true
+  },
+  "script": {
+    "home": "home.js",
+    "search": "search.js",
+    "detail": "detail.js",
+    "toc": "toc.js",
+    "chap": "chap.js",
+    "track": "track.js"
+  },
+  "config": {
+    "DOMAIN": {
+      "title": "Domain",
+      "default": "https://www.bilibili.com",
+      "mode": "select",
+      "values": ["https://www.bilibili.com", "https://bilibili.com"]
+    },
+    "REPORT_HISTORY": {
+      "title": "Ghi lịch sử đã mở lên Bilibili",
+      "subtitle": "Ghi ở 0 giây khi phân giải nguồn, chưa xác nhận đã phát. Có thể đặt lại tiến độ cũ; chạy test cũng có thể ghi.",
+      "default": "false",
+      "mode": "toggle"
+    },
+    "DANMAKU_COLOR": {
+      "title": "Màu Danmaku (Hex):",
+      "default": "#FFFFFF",
+      "mode": "input"
+    }
+  }
+}

@@ -2,17 +2,18 @@
   "metadata": {
     "name": "Douyin",
     "author": "Chanhnh",
-    "version": 1,
+    "version": 2,
     "source": "https://www.douyin.com",
-    "description": "Xem video Douyin đề xuất, đăng nhập hoặc nhập Cookie để đề xuất nội dung cá nhân hóa\nExt chỉ nhận nội dung từ Douyin, không gửi bất cứ thứ gì đến server Douyin",
+    "description": "Xem video Douyin Đề xuất và Tinh tuyển, đăng nhập hoặc nhập Cookie để đề xuất nội dung cá nhân hóa\nCó thể bật/tắt gửi lịch sử xem đến Douyin trong cấu hình (mặc định tắt, cần đăng nhập).",
     "locale": "zh-CN",
-    "regexp": "(https?://)?(?:www\\.)?(?:douyin\\.com/(?:video|note|modal)/[0-9]+|iesdouyin\\.com/share/video/[0-9]+|v\\.douyin\\.com/[A-Za-z0-9_-]+)(?:[/?][^\\s]*)?",
+    "regexp": "(https?://)?(?:www\\.)?(?:douyin\\.com/(?:video|note|modal)/[0-9]+|douyin\\.com/[^\\s?]+\\?[^\\s]*modal_id=[0-9]+|iesdouyin\\.com/share/video/[0-9]+|v\\.douyin\\.com/[A-Za-z0-9_-]+)(?:[/?][^\\s]*)?",
     "type": "video",
     "nsfw": false,
     "encrypt": true
   },
   "script": {
     "home": "home.js",
+    "genre": "genre.js",
     "search": "search.js",
     "detail": "detail.js",
     "toc": "toc.js",
@@ -20,6 +21,12 @@
     "track": "track.js"
   },
   "config": {
+    "REPORT_WATCH_HISTORY": {
+      "title": "Gửi lịch sử xem đến Douyin",
+      "subtitle": "Cần đăng nhập. Video được chuẩn bị nguồn phát, kể cả tải trước, có thể được ghi vào lịch sử xem.",
+      "default": "false",
+      "mode": "toggle"
+    },
     "ORIENTATION": {
       "title": "Đề xuất nội dung theo màn hình:",
       "default": "Dọc",
