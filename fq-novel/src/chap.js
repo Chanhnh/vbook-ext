@@ -8,7 +8,7 @@ function execute(url) {
         var itemId = fqExtractItemId(url);
         if (!itemId) return Response.error("Không tìm thấy item_id trong URL chương.");
         var device = fqResolveDevice();
-        var chapter = fqGetChapter(device, itemId);
+        var chapter = fqGetChapter(device, itemId, url);
         return Response.success(chapter.html, chapter.title || "");
     } catch (e) {
         return Response.error(fqErrorMessage(e));

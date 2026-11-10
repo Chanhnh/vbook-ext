@@ -6,7 +6,6 @@ var FQ_DEFAULT_DEVICE_BRAND = "realme";
 var FQ_READING_BASE = "https://reading.snssdk.com";
 var FQ_DEVICE_REGISTER_URL = "https://i.snssdk.com/service/2/device_register/";
 var FQ_SHARED_KEY = fqHexDecode("ac25c67ddd8f38c1b37a2348828e222e");
-var FQ_SIGN_KEY = fqHexDecode("ac1adaae95a7af94a5114ab3b3a97dd80050aa0a39314c40528caec95256c28c");
 var FQ_FIXED_STRING = fqB64Decode("TdTC5rgxYgkOUrPHpnM7pByyRiuCmrWKGWs521cXdST0m69/COjWjSanLjfBqVovHwWlGJKu8pSXMrYqOKrdWA==");
 
 var FQ_DEVICE_STORE = "fqweb_device_v1";
@@ -418,11 +417,113 @@ function fqNormalizeChapterText(text) {
 
 function fqStripAttributes(html) {
     return String(html || "")
-        .replace(/\s+(?:idx|p_idx|e_idx|e_order)="[^"]*"/gi, "")
-        .replace(/\s+(?:idx|p_idx|e_idx|e_order)='[^']*'/gi, "");
+        .replace(/\s+(?:p_idx|e_idx|e_order)="[^"]*"/gi, "")
+        .replace(/\s+(?:p_idx|e_idx|e_order)='[^']*'/gi, "");
 }
 
-function fqFallbackChapterHtml(raw, title) {
+function fqExtractBookId(url) {
+    var text = String(url || "");
+    var match = text.match(/[?&]book_id=(\d+)/);
+    if (!match) match = text.match(/\/page\/(\d+)/);
+    return match ? match[1] : "";
+}
+
+function fqFetchParagraphCommentCounts(device, itemId, itemVersion) {
+    try {
+        var deviceId = device && device.device_id ? String(device.device_id) : "";
+        var query = "aid=1967&device_id=" + encodeURIComponent(deviceId) + "&version_code=70132&device_platform=android&version_name=7.0.1.32";
+        var url = "https://api5-normal-sinfonlineb.fqnovel.com/novel/commentapi/idea/list/" + encodeURIComponent(String(itemId)) + "/v1/?" + query;
+        var body = {
+            "comment_source": 3,
+            "compliance_status": 0,
+            "item_id": String(itemId),
+            "item_version": String(itemVersion || ""),
+            "server_channel": 7
+        };
+        var serialized = JSON.stringify(body);
+        var headers = fqSignHeaders(url, serialized);
+        headers["User-Agent"] = "com.dragon.read";
+        headers["Content-Type"] = "application/json; charset=utf-8";
+
+        var response = fetch(url, {
+            method: "POST",
+            headers: headers,
+            body: serialized,
+            timeout: 10000
+        });
+        if (!response.ok) return { data: {}, item_version: "" };
+        var text = response.text();
+        if (!text) return { data: {}, item_version: "" };
+        var json = fqParseJson(text);
+        if (!json || !json.data) return { data: {}, item_version: "" };
+        return {
+            data: json.data.data || {},
+            item_version: json.data.item_version ? String(json.data.item_version) : ""
+        };
+    } catch (e) {
+        return { data: {}, item_version: "" };
+    }
+}
+
+function fqExtractParagraphIndex(attrs, content) {
+    var m = String(attrs || "").match(/[\s]idx=["']?(\d+)["']?/i);
+    if (m) return m[1];
+    if (content) {
+        var blk = String(content || "").match(/<blk\b[^>]*[\s](?:p_idx|idx)=["']?(\d+)["']?/i);
+        if (blk) return blk[1];
+    }
+    var p = String(attrs || "").match(/[\s]p_idx=["']?(\d+)["']?/i);
+    if (p && p[1] !== "40000") return p[1];
+    return null;
+}
+
+function fqDecorateChapterParagraphs(html, bookId, itemId, itemVersion, countMap, deviceId) {
+    if (!html) return "";
+    var res = String(html);
+    if (countMap && typeof countMap === "object") {
+        res = res.replace(/<p\b([^>]*)>([\s\S]*?)<\/p>/gi, function(match, attrs, content) {
+            var idx = fqExtractParagraphIndex(attrs, content);
+            var clean = content.replace(/<blk\b[^>]*>/gi, "").replace(/<\/blk>/gi, "");
+            if (!idx && idx !== "0") return "<p>" + clean + "</p>";
+            var info = countMap[idx];
+            var count = info ? (info.count || 0) : 0;
+            if (count > 0) {
+                var input = "book_id=" + encodeURIComponent(String(bookId || "")) +
+                            "&item_id=" + encodeURIComponent(String(itemId || "")) +
+                            "&item_version=" + encodeURIComponent(String(itemVersion || "")) +
+                            "&para_index=" + encodeURIComponent(String(idx)) +
+                            (deviceId ? "&device_id=" + encodeURIComponent(String(deviceId)) : "");
+                return '<p idx="' + idx + '">' + clean + '<comment count="' + count + '" input="' + input + '" script="para_comment.js"></comment></p>';
+            }
+            return '<p idx="' + idx + '">' + clean + '</p>';
+        });
+
+        res = res.replace(/<blk\b([^>]*)>([\s\S]*?)<\/blk>/gi, function(match, attrs, content) {
+            var idx = fqExtractParagraphIndex(attrs, "");
+            if (!idx && idx !== "0") return "<p>" + content + "</p>";
+            var info = countMap[idx];
+            var count = info ? (info.count || 0) : 0;
+            if (count > 0) {
+                var input = "book_id=" + encodeURIComponent(String(bookId || "")) +
+                            "&item_id=" + encodeURIComponent(String(itemId || "")) +
+                            "&item_version=" + encodeURIComponent(String(itemVersion || "")) +
+                            "&para_index=" + encodeURIComponent(String(idx)) +
+                            (deviceId ? "&device_id=" + encodeURIComponent(String(deviceId)) : "");
+                return '<p idx="' + idx + '">' + content + '<comment count="' + count + '" input="' + input + '" script="para_comment.js"></comment></p>';
+            }
+            return '<p idx="' + idx + '">' + content + '</p>';
+        });
+    }
+
+    res = fqStripAttributes(res);
+    res = res.replace(/<blk\b[^>]*>/gi, "").replace(/<\/blk>/gi, "");
+    res = res.replace(/<br\s*\/?>/gi, "\n");
+    res = res.replace(/>\s*\n\s*</g, "><");
+    res = res.replace(/\n+/g, "<br><br>");
+    return res.replace(/^\s+|\s+$/g, "");
+}
+
+function fqFallbackChapterHtml(raw, title, bookId, itemId, itemVersion, countMap, deviceId) {
     var html = String(raw || "");
     html = html.replace(/<\?xml[^>]*\?>/gi, "");
     html = html.replace(/<!DOCTYPE[^>]*>/gi, "");
@@ -435,15 +536,11 @@ function fqFallbackChapterHtml(raw, title) {
     html = html.replace(/<(?:h1|h2|h3)\b[^>]*>[\s\S]*?<\/(?:h1|h2|h3)>/i, "");
     var bodyMatch = html.match(/<body\b[^>]*>([\s\S]*?)<\/body>/i);
     if (bodyMatch) html = bodyMatch[1];
-    html = fqStripAttributes(html);
-    html = html.replace(/<blk\b[^>]*>/gi, "").replace(/<\/blk>/gi, "");
-    html = html.replace(/<br\s*\/?>/gi, "\n");
-    html = html.replace(/>\s*\n\s*</g, "><");
-    html = html.replace(/\n+/g, "<br><br>");
-    return { html: html.replace(/^\s+|\s+$/g, ""), title: String(title || "").replace(/<[^>]+>/g, "").replace(/^\s+|\s+$/g, "") };
+    html = fqDecorateChapterParagraphs(html, bookId, itemId, itemVersion, countMap, deviceId);
+    return { html: html, title: String(title || "").replace(/<[^>]+>/g, "").replace(/^\s+|\s+$/g, "") };
 }
 
-function fqParseChapterHtml(raw, title) {
+function fqParseChapterHtml(raw, title, bookId, itemId, itemVersion, countMap, deviceId) {
     var html = String(raw || "");
     var sourceTitle = String(title || "");
     if (!html.replace(/\s+/g, "")) throw fqError("EMPTY", "Nội dung chương trống.");
@@ -457,7 +554,7 @@ function fqParseChapterHtml(raw, title) {
     } catch (e) {
         doc = null;
     }
-    if (!doc) return fqFallbackChapterHtml(html, sourceTitle);
+    if (!doc) return fqFallbackChapterHtml(html, sourceTitle, bookId, itemId, itemVersion, countMap, deviceId);
     try {
         doc.select("style").remove();
         doc.select("script").remove();
@@ -488,12 +585,8 @@ function fqParseChapterHtml(raw, title) {
         body = null;
     }
     if (body) html = body.html();
-    html = fqStripAttributes(html);
-    html = html.replace(/<blk\b[^>]*>/gi, "").replace(/<\/blk>/gi, "");
-    html = html.replace(/<br\s*\/?>/gi, "\n");
-    html = html.replace(/>\s*\n\s*</g, "><");
-    html = html.replace(/\n+/g, "<br><br>");
-    html = html.replace(/^\s+|\s+$/g, "");
+
+    html = fqDecorateChapterParagraphs(html, bookId, itemId, itemVersion, countMap, deviceId);
     if (!html) throw fqError("EMPTY", "Nội dung chương trống.");
     return {
         html: html,
@@ -501,7 +594,7 @@ function fqParseChapterHtml(raw, title) {
     };
 }
 
-function fqGetChapter(device, itemId) {
+function fqGetChapter(device, itemId, url) {
     var keyInfo = fqGetKey(device);
     var data;
     try {
@@ -530,7 +623,18 @@ function fqGetChapter(device, itemId) {
         data = fqFetchChapterData(device, itemId);
         plain = fqDecryptChapterData(data, keyInfo.key);
     }
-    return fqParseChapterHtml(plain, data.title);
+
+    var novelData = data.novel_data || {};
+    var bookId = String(novelData.book_id || fqExtractBookId(url) || "");
+    var itemVersion = String(novelData.version !== undefined ? novelData.version : (data.item_version !== undefined ? data.item_version : ""));
+    var deviceId = device && device.device_id ? String(device.device_id) : "";
+
+    var countResult = fqFetchParagraphCommentCounts(device, itemId, itemVersion);
+    if (!itemVersion && countResult.item_version) {
+        itemVersion = countResult.item_version;
+    }
+
+    return fqParseChapterHtml(plain, data.title, bookId, itemId, itemVersion, countResult.data, deviceId);
 }
 
 function fqExtractItemId(url) {

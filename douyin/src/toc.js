@@ -19,7 +19,7 @@ function fetchSeriesBatch(seriesId, cursor, videoId) {
                 "Accept": "application/json, text/plain, */*",
                 "Cookie": getCookie()
             },
-            timeout: 30000
+            timeout: 10000
         });
         if (!res.ok) return null;
 
@@ -103,15 +103,24 @@ function fetchChapters(seriesId, videoId) {
 function execute(url) {
     if (!url) return Response.error("URL video không hợp lệ");
 
+    var chapters = [
+        { name: "Xem video", url: url, lock: false, pay: false }
+    ];
+
     var videoId = resolveVideoId(url);
-    // TOC chỉ chạy khi URL đã có mix_id/series_id thật.
+    // TOC tải thêm danh sách tập khi URL có mix_id/series_id thật.
     var seriesId = getMixIdFromUrl(url);
     if (seriesId) {
-        var chapters = fetchChapters(seriesId, videoId);
-        if (chapters.length > 0) return Response.success(chapters);
+        try {
+            var seriesChapters = fetchChapters(seriesId, videoId);
+            if (seriesChapters && seriesChapters.length > 0) {
+                for (var i = 0; i < seriesChapters.length; i++) {
+                    chapters.push(seriesChapters[i]);
+                }
+            }
+        } catch (e) {
+        }
     }
 
-    return Response.success([
-        { name: "Xem video", url: url, lock: false, pay: false }
-    ]);
+    return Response.success(chapters);
 }

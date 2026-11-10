@@ -882,6 +882,8 @@ function fqSha512Bytes(data) {
     return new Uint8Array(fqSha512.array(data));
 }
 
+var FQ_SIGN_KEY = fqHexDecode("ac1adaae95a7af94a5114ab3b3a97dd80050aa0a39314c40528caec95256c28c");
+
 function fqArgus(query, stubHex, ts) {
     var deviceId = fqQueryParam(query, "device_id");
     var versionName = fqQueryParam(query, "version_name") || "7.0.1.32";

@@ -24,7 +24,7 @@ function buildSuggestedVideo(item) {
     }
     if (mixId) link += "&mix_id=" + encodeURIComponent(mixId);
 
-    var result = { name: title, link: link, description: author };
+    var result = { name: title, link: link, description: author, type: "short" };
     if (video.cover && video.cover.url_list && video.cover.url_list.length) {
         result.cover = video.cover.url_list[0];
     } else if (video.origin_cover && video.origin_cover.url_list && video.origin_cover.url_list.length) {
