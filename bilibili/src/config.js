@@ -8,6 +8,14 @@ try {
 let API_URL = "https://api.bilibili.com";
 let SESSION_COOKIE = "";
 let SESSION_READY = false;
+let SESSION_WBI = null;
+
+function parseWbiKeys(account) {
+    let wbi = account && account.wbi_img ? account.wbi_img : {};
+    let img = String(wbi.img_url || "").match(/\/([0-9a-f]{32})\.png(?:\?|$)/i);
+    let sub = String(wbi.sub_url || "").match(/\/([0-9a-f]{32})\.png(?:\?|$)/i);
+    return img && sub ? { imgKey: img[1], subKey: sub[1] } : null;
+}
 
 function loginError() {
     let error = new Error("Cần đăng nhập Bilibili. Hãy đăng nhập hoặc cập nhật cookie nguồn trong vBook rồi thử lại.");
@@ -31,9 +39,11 @@ function requireLogin() {
     try {
         let account = requestJson("/x/web-interface/nav", {}, BASE_URL + "/", true);
         if (account.isLogin !== true) throw loginError();
+        SESSION_WBI = parseWbiKeys(account);
         SESSION_READY = true;
     } catch (error) {
         SESSION_COOKIE = "";
+        SESSION_WBI = null;
         throw error;
     }
 }
@@ -88,6 +98,7 @@ function requestJson(path, queries, referer, checkingLogin, timeout) {
         if (code === -101) {
             SESSION_READY = false;
             SESSION_COOKIE = "";
+            SESSION_WBI = null;
             throw loginError();
         }
         if (code === -404 || code === 62002) throw new Error("Video không tồn tại hoặc đã bị xóa.");
@@ -169,6 +180,14 @@ function countText(value) {
 function publishedText(value, includeTime) {
     let timestamp = listNumber(value);
     if (timestamp === null || timestamp <= 0) return "";
+    if (!includeTime) {
+        let now = Math.floor(Date.now() / 1000);
+        let diff = now - timestamp;
+        if (diff < 60) return "Vừa xong";
+        if (diff < 3600) return Math.floor(diff / 60) + " phút trước";
+        if (diff < 86400) return Math.floor(diff / 3600) + " giờ trước";
+        if (diff < 2592000) return Math.floor(diff / 86400) + " ngày trước";
+    }
     let date = new Date((timestamp + 8 * 3600) * 1000);
     if (!isFinite(date.getTime())) return "";
     function pad(number) { return (number < 10 ? "0" : "") + number; }

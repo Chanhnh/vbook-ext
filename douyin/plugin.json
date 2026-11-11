@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Douyin",
     "author": "Chanhnh",
-    "version": 2,
+    "version": 3,
     "source": "https://www.douyin.com",
     "description": "Xem video Douyin Đề xuất và Tinh tuyển, đăng nhập hoặc nhập Cookie để đề xuất nội dung cá nhân hóa\nCó thể bật/tắt gửi lịch sử xem đến Douyin trong cấu hình (mặc định tắt, cần đăng nhập).",
     "locale": "zh-CN",

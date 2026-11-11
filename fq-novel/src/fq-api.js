@@ -4,6 +4,7 @@ var FQ_DEFAULT_DEVICE_TYPE = "P30";
 var FQ_DEFAULT_DEVICE_BRAND = "realme";
 
 var FQ_READING_BASE = "https://reading.snssdk.com";
+var FQ_API_BASE = "https://api5-normal-sinfonlineb.fqnovel.com";
 var FQ_DEVICE_REGISTER_URL = "https://i.snssdk.com/service/2/device_register/";
 var FQ_SHARED_KEY = fqHexDecode("ac25c67ddd8f38c1b37a2348828e222e");
 var FQ_FIXED_STRING = fqB64Decode("TdTC5rgxYgkOUrPHpnM7pByyRiuCmrWKGWs521cXdST0m69/COjWjSanLjfBqVovHwWlGJKu8pSXMrYqOKrdWA==");
@@ -356,8 +357,8 @@ function fqRegisterAndSaveDevice(deviceType, deviceBrand) {
     return { device: device, key: keyInfo };
 }
 
-function fqContentQuery(device, itemId) {
-    return fqBuildQuery([
+function fqAppPairs(device) {
+    return [
         ["iid", device.install_id],
         ["device_id", device.device_id],
         ["ac", "wifi"],
@@ -374,10 +375,54 @@ function fqContentQuery(device, itemId) {
         ["device_brand", device.device_brand],
         ["update_version_code", "70132"],
         ["manifest_version_code", "70132"],
-        ["pv_player", "70132"],
+        ["pv_player", "70132"]
+    ];
+}
+
+function fqContentQuery(device, itemId) {
+    return fqBuildQuery(fqAppPairs(device).concat([
         ["item_id", itemId],
         ["req_type", "1"]
+    ]));
+}
+
+function fqApiFetchJson(url, userAgent) {
+    var headers = fqSignHeaders(url);
+    headers = fqMergeHeaders(headers, { "User-Agent": userAgent || "com.dragon.read" });
+    var response = fetch(url, { headers: headers, timeout: 30000 });
+    if (!response.ok) throw fqError("HTTP", "Fanqie HTTP " + response.status);
+    var text = response.text();
+    if (!text) {
+        throw fqError("DEVICE_INVALID", "Device hiện tại không gọi được API (có thể đã bị thu hồi).\nMở trang extension → bấm Đăng ký device mới.");
+    }
+    var json = fqParseJson(text);
+    if (!json) throw fqError("API", "Phản hồi Fanqie không phải JSON.");
+    if (json.code !== 0) throw fqError("API", "Fanqie báo lỗi: " + (json.message || json.code));
+    return json;
+}
+
+function fqFetchBookmallTab(device, tabType, offset, sessionId, tabIndex) {
+    var idx = String(tabIndex === undefined || tabIndex === null || tabIndex === "" ? "0" : tabIndex);
+    var pairs = fqAppPairs(device).concat([
+        ["need_personal_recommend", "1"],
+        ["player_so_load", "1"],
+        ["is_android_pad_screen", "0"],
+        ["tab_type", String(tabType || "2")],
+        ["offset", String(offset === undefined || offset === null || offset === "" ? "0" : offset)],
+        ["tab_index", idx],
+        ["last_tab_index", idx],
+        ["client_template", "0"],
+        ["classic_tab_style", "v3"],
+        ["lore_tab_style", "v5"],
+        ["bottom_tab_type", "0"],
+        ["landing_bottom_tab_type", "0"],
+        ["client_req_type", "1"]
     ]);
+    if (sessionId) pairs.push(["session_id", String(sessionId)]);
+    var url = FQ_API_BASE + "/reading/bookapi/bookmall/tab/v?" + fqBuildQuery(pairs);
+    var json = fqApiFetchJson(url, "com.dragon.read");
+    if (!json.data) throw fqError("API", "API gợi ý Fanqie không trả về data.");
+    return json.data;
 }
 
 function fqFetchChapterData(device, itemId) {

@@ -1,5 +1,6 @@
 function execute(key) {
     return Response.success([
+        { title: "推荐", input: "2", script: "recommend.js" },
         { title: "巅峰榜", input: "https://fanqienovel.com/api/author/misc/top_book_list/v1", script: "gen.js" },
         { title: "出版", input: "https://fanqienovel.com/api/node/publication/list?page_index={{page}}&page_count=18", script: "gen.js" },
         { title: "最热", input: "https://fanqienovel.com/api/author/library/book_list/v0/?page_count=18&page_index={{page}}&gender=-1&category_id=-1&creation_status=-1&word_count=-1&book_type=-1&sort=0", script: "gen.js" },

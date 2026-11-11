@@ -65,6 +65,13 @@ function videoDetail(video, input, part, genres) {
         description: String(video.desc || ""),
         detail: lines.join("\n"),
         genres: genres || [],
+        comments: aid !== null && aid > 0 ? [
+            {
+                title: "Bình luận",
+                input: JSON.stringify({ bvid: input.bvid, aid: String(aid) }),
+                script: "comment.js"
+            }
+        ] : [],
         url: videoUrl(input.bvid, input.part > 1 ? input.part : 0),
         type: "video",
         format: "series",

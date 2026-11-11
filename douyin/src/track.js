@@ -78,10 +78,9 @@ function fetchDanmakuData(videoId, durationMs) {
     var seen = {};
 
     var windowSize = 32000;
-    var maxSegments = 60;
-    var totalSegments = duration > 0 ? Math.ceil(duration / windowSize) + 1 : maxSegments;
-    if (totalSegments > maxSegments) totalSegments = maxSegments;
+    var totalSegments = duration > 0 ? Math.ceil(duration / windowSize) : 120;
     var emptyStreak = 0;
+    var failedFirst = false;
 
     for (var n = 0; n < totalSegments; n++) {
         var startTime = n * windowSize;
@@ -97,17 +96,24 @@ function fetchDanmakuData(videoId, durationMs) {
                 timeout: 6000
             });
             if (!response.ok) {
-                if (n === 0) break;
+                if (n === 0) {
+                    failedFirst = true;
+                    break;
+                }
                 continue;
             }
             var json = response.json();
-            if (json.status_code !== 0 && json.status_code !== undefined) break;
+            if (!json || (json.status_code !== 0 && json.status_code !== undefined)) {
+                if (n === 0) failedFirst = true;
+                break;
+            }
+            if (json.total === 0) break;
 
             var list = json.danmaku_list || [];
             if (list.length === 0) {
                 // Không dừng ngay ở cửa sổ rỗng: video có thể không có bình luận ở giữa.
                 emptyStreak++;
-                if (duration <= 0 && emptyStreak >= 2) break;
+                if (duration <= 0 && emptyStreak >= 3) break;
                 continue;
             }
             emptyStreak = 0;
@@ -116,7 +122,7 @@ function fetchDanmakuData(videoId, durationMs) {
                 var d = list[i];
                 if (!d || !d.text) continue;
                 var id = String(d.danmaku_id || (d.offset_time + "_" + d.text));
-                if (seen[id] || items.length >= 5000) continue;
+                if (seen[id]) continue;
                 seen[id] = true;
 
                 var offset = Number(d.offset_time) || 0;
@@ -128,8 +134,12 @@ function fetchDanmakuData(videoId, durationMs) {
                     color: danmakuColor
                 });
             }
+            if (json.total > 0 && items.length >= json.total) break;
         } catch (e) {
-            break;
+            if (n === 0) {
+                failedFirst = true;
+                break;
+            }
         }
     }
 
@@ -140,7 +150,7 @@ function fetchDanmakuData(videoId, durationMs) {
     var itemsVp = translateDanmakuVp(items);
 
     try {
-        if (items.length > 0) {
+        if (!failedFirst) {
             cacheStorage.setItem(key, JSON.stringify({
                 time: Date.now(),
                 items: items,

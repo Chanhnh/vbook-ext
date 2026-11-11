@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Bilibili CN",
     "author": "Chanhnh",
-    "version": 1,
+    "version": 2,
     "source": "https://www.bilibili.com",
     "description": "Cần đăng nhập hoặc nhập cookie nguồn trong vBook. Video công khai, chất lượng theo quyền tài khoản và phụ đề khi có. Không hỗ trợ Bangumi hoặc video trả phí.",
     "locale": "zh-CN",

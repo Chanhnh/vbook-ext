@@ -2,10 +2,10 @@
   "metadata": {
     "name": "Fanqie Novel",
     "author": "Chanhnh",
-    "version": 2,
+    "version": 3,
     "source": "https://fanqienovel.com",
     "regexp": "fanqienovel.com/page/(\\d+)|fanqienovel.com/info(.*?)|.*?changdunovel\\.com/wap/share-v2\\.html.*?[?&]book_id=(\\d+).*",
-    "description": "Nội dung chương lấy trực tiếp từ API app Fanqie.\nBấm action Đăng ký device mới trước khi đọc chương; đăng ký mới sẽ thay device cũ.\nDevice bị thu hồi thì bấm Đăng ký device mới để thay.",
+    "description": "Nội dung chương và gợi ý trang chủ lấy trực tiếp từ API app Fanqie.\nBấm action Đăng ký device mới trước khi xem gợi ý hoặc đọc chương; đăng ký mới sẽ thay device cũ.\nDevice bị thu hồi thì bấm Đăng ký device mới để thay.",
     "locale": "zh-CN",
     "language": "javascript",
     "type": "chinese_novel"
